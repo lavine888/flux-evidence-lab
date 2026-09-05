@@ -8,6 +8,7 @@
 - HTTP smoke: health/catalog/static/offline/tamper paths passed; Paper-only and tamper rejection confirmed.
 - Public live: 3 attempts, 0 observed, 3 external unavailable (`502`); no raw public response persisted.
 - Release scan: 0 secret-pattern hits, 0 files over 10 MiB; portable runtime/offline-kit/node_modules are absent from the source checkout.
+- Fresh-clone replay from the pushed `main`: install, syntax check, 32/32 tests, and sample verification all passed.
 - The three-minute script is exactly timed; the main line uses reproducible offline scenarios.
 - Historical Windows portable-candidate results are retained as historical evidence, not current-source results.
 

@@ -18,6 +18,7 @@
 | 公开实时场景 | 3 次尝试，0 次观察到可用结果，3 次 HTTP 502 / EXTERNAL_DEPENDENCY_UNAVAILABLE；这是当前外部网络依赖不可用，不被改写成 live 成功 |
 | 原始公开响应 | 不持久化；runner 只在内存中读取响应，摘要只保留状态、计数、动作和风险结果 |
 | 秘密与大文件扫描 | 排除 staging 后扫描常见私钥/token 模式并查找超过 10 MiB 的文件 | 0 secret-pattern hits；0 files over 10 MiB；`runtime/`、`promo/offline-kit/`、`app/node_modules/` 均不在当前 source checkout |
+| GitHub fresh clone | 从刚推送的 `main` 新克隆到独立临时目录，执行 `npm ci --ignore-scripts`、`npm run check`、`npm test` 和 `node tools/review-evidence.mjs --verify-examples` | PASS；0 vulnerabilities；32/32、3 suites、0 fail/skip；两个样本均 `verification: PASS` |
 
 ### 当前审计批次
 

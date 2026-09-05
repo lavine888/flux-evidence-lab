@@ -1,0 +1,105 @@
+{
+  "schema_version": "flux-team-handoff-context@1.0.0",
+  "project": {
+    "name": "Flux Evidence Lab",
+    "asset": "BTC-USD",
+    "category": "verifiable paper-only research and risk agent",
+    "primary_users": [
+      "digital-asset researcher",
+      "model-risk reviewer",
+      "risk-control reviewer"
+    ],
+    "secondary_users": [
+      "audit reviewer",
+      "compliance reviewer",
+      "engineering reviewer"
+    ]
+  },
+  "execution_boundary": {
+    "mode": "PAPER_ONLY",
+    "exchange_connection": false,
+    "wallet_connection": false,
+    "real_funds": false,
+    "external_order_route": "DISABLED",
+    "investment_advice": false,
+    "performance_claim": "NONE"
+  },
+  "pipeline": [
+    "evidence collection",
+    "whitelist deterministic normalization",
+    "versioned multinomial logistic inference",
+    "deterministic final risk veto",
+    "local paper order or no order",
+    "SHA-256 step chain",
+    "ephemeral-runtime Ed25519 signature",
+    "independent verification"
+  ],
+  "versions": {
+    "model": "btc-multinomial-logit@1.0.0",
+    "risk_policy": "btc-paper-risk@1.1.0",
+    "runtime": "Node.js v24.19.0 Windows x64"
+  },
+  "scenarios": [
+    {"id": "offline-constructive", "input_type": "SYNTHETIC_FIXTURE", "purpose": "constructive paper decision path"},
+    {"id": "stale-evidence", "input_type": "SYNTHETIC_FIXTURE", "purpose": "EVIDENCE_FRESHNESS veto"},
+    {"id": "risk-limit", "input_type": "SYNTHETIC_FIXTURE", "purpose": "ORDER_NOTIONAL_LIMIT veto"},
+    {"id": "public-btc-live", "input_type": "PUBLIC_LIVE_KEYLESS", "purpose": "request-time public BTC evidence", "sources": ["CoinLore", "Coin Metrics Community", "Alternative.me", "GitHub bitcoin/bitcoin"]},
+    {"id": "local-8790", "input_type": "OPTIONAL_LOCAL_READ_ONLY", "purpose": "optional local multi-source research integration"}
+  ],
+  "local_api": [
+    {"method": "GET", "path": "/api/health"},
+    {"method": "GET", "path": "/api/scenarios"},
+    {"method": "GET", "path": "/api/model-card"},
+    {"method": "POST", "path": "/api/run"},
+    {"method": "GET", "path": "/api/reports/:id"},
+    {"method": "POST", "path": "/api/verify"}
+  ],
+  "entrypoints": {
+    "verify": "VERIFY-FILES.cmd",
+    "start": "START-FLUX.cmd",
+    "stop": "STOP-FLUX.cmd",
+    "open_media": "OPEN-MEDIA-KIT.cmd",
+    "server": "app/server.js",
+    "frontend": "app/public/index.html",
+    "core": "app/src/core/index.mjs",
+    "public_adapter": "app/src/adapters/public-btc.mjs",
+    "model": "app/model/btc-multinomial-logit-v1.mjs"
+  },
+  "documentation_read_order": [
+    "README-FIRST.md",
+    "AI-HANDOFF.md",
+    "docs/ARCHITECTURE.md",
+    "docs/COMPLIANCE.md",
+    "docs/DEMO_SCRIPT_3MIN.md",
+    "docs/TEST_REPORT.md",
+    "docs/COMPETITION_REQUIREMENTS_MATRIX.md",
+    "docs/THIRD_PARTY_NOTICES.md"
+  ],
+  "media": {
+    "pdf_directory": "promo/offline-kit/PDF",
+    "png_directory": "promo/offline-kit/PNG",
+    "printer_zip": "promo/offline-kit/Flux-Evidence-Lab-Offline-Media-Kit.zip",
+    "ui_screenshots": "promo/agent-ui",
+    "copy_deck": "promo/COPY_DECK.md"
+  },
+  "excluded_by_user_request": [
+    "promo/modular-3d",
+    "three modular 3D promotional compositions",
+    "corresponding Lovart originals",
+    "corresponding editable HTML and CSS"
+  ],
+  "claims_guardrail": {
+    "integrity_does_not_prove": ["upstream truth", "model correctness", "profitability", "long-term signer identity", "trusted timestamp"],
+    "software_tests_do_not_prove": ["prediction accuracy", "probability calibration", "strategy profitability"]
+  },
+  "human_confirmation_required": [
+    "official rule version",
+    "eligibility and submission portal project id",
+    "three-minute video file and duration",
+    "onsite rehearsal record",
+    "cross-border and vendor terms",
+    "competition-period work share at least 70 percent",
+    "project license",
+    "final upload authorization"
+  ]
+}

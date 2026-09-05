@@ -4,7 +4,7 @@
 
 你是现场队友的项目协作 AI。先理解项目，再帮助队友运行、解释、排障、排练或准备提交材料。不要擅自扩展成真实交易系统，也不要替团队确认尚未完成的比赛、法律或许可事项。
 
-本文件与 `PROJECT-CONTEXT.json` 是当前队友包的最高优先级说明。`docs/` 中的内容提供更深证据；其中个别历史段落可能描述更早的候选包，当前包的实际文件清单以 `manifest.sha256` 为准。
+本文件与 `PROJECT-CONTEXT.json` 是当前队友包的最高优先级说明。它描述完整 Windows 便携 handoff；如果从 GitHub 获取的是源码 checkout，应以根目录 `README.md` 和 `PROJECT-CONTEXT.json` 的 `artifact_scope` 为准。`docs/` 中的内容提供更深证据；其中个别历史段落可能描述更早的候选包，当前源码不应被当作便携包，旧便携包文件清单才以 `manifest.sha256` 为准。
 
 ## 1. 项目身份
 
@@ -143,7 +143,7 @@ cd .\app
 ..\runtime\node.exe --test test\*.test.mjs
 ```
 
-期望基线：30/30，3 suites，0 fail，0 skipped。
+历史便携候选包基线为 30/30；当前 GitHub 源码 checkout 的最新实际结果以 `docs/TEST_REPORT.md` 的“当前源码 checkout 复现记录”为准。
 
 ## 8. 本地 API
 
@@ -175,12 +175,12 @@ cd .\app
 
 完整台词见 `docs/DEMO_SCRIPT_3MIN.md`。
 
-## 10. 物料地图
+## 10. 物料地图（完整便携 handoff 专用）
 
-- `promo/offline-kit/PDF/`：8 份正式 PDF。
-- `promo/offline-kit/PNG/`：17 张正式 PNG。
-- `promo/offline-kit/Flux-Evidence-Lab-Offline-Media-Kit.zip`：独立打印交付包。
-- `promo/agent-ui/`：05 正式 Agent UI 截图。
+- `promo/offline-kit/PDF/`：8 份正式 PDF（当前 Git 源码 checkout 不包含）。
+- `promo/offline-kit/PNG/`：17 张正式 PNG（当前 Git 源码 checkout 不包含）。
+- `promo/offline-kit/Flux-Evidence-Lab-Offline-Media-Kit.zip`：独立打印交付包（当前 Git 源码 checkout 不包含）。
+- `promo/agent-ui/`：当前 checkout 保留的代表性 Agent UI 截图；不等同于 offline-kit。
 - `promo/COPY_DECK.md`：长短介绍、社交文案和评委陈述。
 
 用户已拒绝上一版 3 张模块化 3D 宣传图，因此本包不含 `promo/modular-3d/`、其 Lovart 原图或编辑源。不要建议队友从历史包恢复这些图，除非用户重新明确要求。
@@ -235,4 +235,18 @@ cd .\app
 
 ## 15. 当前包校验
 
+源码 checkout 采用以下 Node.js 验收路径；完整便携 handoff 才采用下一行的 `VERIFY-FILES.cmd`：
+
+```powershell
+cd app
+npm ci --ignore-scripts
+npm run check
+npm test
+cd ..
+node tools/review-evidence.mjs --verify-examples
+```
+
+当前源码仓库有意不包含 `runtime/node.exe`、`promo/offline-kit/` 和此前的便携 ZIP；根目录 manifest 与 `BUILD-INFO.json` 是历史 handoff 追溯资料，不是当前源码构建清单。
+
+完整便携 handoff 的校验指令：
 先运行 `VERIFY-FILES.cmd`。`manifest.sha256` 覆盖包内除自身外的所有文件。外层 ZIP 的最终 SHA-256 不可能写进自身，必须读取 ZIP 同目录 `.sha256` 文件。

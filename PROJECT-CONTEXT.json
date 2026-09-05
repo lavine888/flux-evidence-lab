@@ -37,14 +37,48 @@
   "versions": {
     "model": "btc-multinomial-logit@1.0.0",
     "risk_policy": "btc-paper-risk@1.1.0",
-    "runtime": "Node.js v24.19.0 Windows x64"
+    "runtime": "portable handoff metadata: Node.js v24.19.0 Windows x64 (not in source checkout)"
+  },
+  "artifact_scope": {
+    "current_git_checkout": true,
+    "portable_runtime_in_checkout": false,
+    "portable_media_in_checkout": false,
+    "portable_zip_in_checkout": false,
+    "source_verification": "cd app; npm ci --ignore-scripts; npm run check; npm test; node tools/review-evidence.mjs --verify-examples",
+    "portable_verification": "only for a complete handoff containing the matching runtime, manifest, tools and offline media"
   },
   "scenarios": [
-    {"id": "offline-constructive", "input_type": "SYNTHETIC_FIXTURE", "purpose": "constructive paper decision path"},
-    {"id": "stale-evidence", "input_type": "SYNTHETIC_FIXTURE", "purpose": "EVIDENCE_FRESHNESS veto"},
-    {"id": "risk-limit", "input_type": "SYNTHETIC_FIXTURE", "purpose": "ORDER_NOTIONAL_LIMIT veto"},
-    {"id": "public-btc-live", "input_type": "PUBLIC_LIVE_KEYLESS", "purpose": "request-time public BTC evidence", "sources": ["CoinLore", "Coin Metrics Community", "Alternative.me", "GitHub bitcoin/bitcoin"]},
-    {"id": "local-8790", "input_type": "OPTIONAL_LOCAL_READ_ONLY", "purpose": "optional local multi-source research integration"}
+    {
+      "id": "offline-constructive",
+      "input_type": "SYNTHETIC_FIXTURE",
+      "purpose": "constructive paper decision path"
+    },
+    {
+      "id": "stale-evidence",
+      "input_type": "SYNTHETIC_FIXTURE",
+      "purpose": "EVIDENCE_FRESHNESS veto"
+    },
+    {
+      "id": "risk-limit",
+      "input_type": "SYNTHETIC_FIXTURE",
+      "purpose": "ORDER_NOTIONAL_LIMIT veto"
+    },
+    {
+      "id": "public-btc-live",
+      "input_type": "PUBLIC_LIVE_KEYLESS",
+      "purpose": "request-time public BTC evidence",
+      "sources": [
+        "CoinLore",
+        "Coin Metrics Community",
+        "Alternative.me",
+        "GitHub bitcoin/bitcoin"
+      ]
+    },
+    {
+      "id": "local-8790",
+      "input_type": "OPTIONAL_LOCAL_READ_ONLY",
+      "purpose": "optional local multi-source research integration"
+    }
   ],
   "local_api": [
     {"method": "GET", "path": "/api/health"},
@@ -65,6 +99,20 @@
     "public_adapter": "app/src/adapters/public-btc.mjs",
     "model": "app/model/btc-multinomial-logit-v1.mjs"
   },
+  "entrypoint_scope": {
+    "source_checkout": [
+      "README.md",
+      "app/package.json",
+      "app/server.js",
+      "tools/review-evidence.mjs"
+    ],
+    "portable_handoff_only": [
+      "VERIFY-FILES.cmd",
+      "START-FLUX.cmd",
+      "STOP-FLUX.cmd",
+      "OPEN-MEDIA-KIT.cmd"
+    ]
+  },
   "documentation_read_order": [
     "README-FIRST.md",
     "AI-HANDOFF.md",
@@ -76,6 +124,7 @@
     "docs/THIRD_PARTY_NOTICES.md"
   ],
   "media": {
+    "scope": "portable handoff metadata; offline-kit paths are not present in the current source checkout",
     "pdf_directory": "promo/offline-kit/PDF",
     "png_directory": "promo/offline-kit/PNG",
     "printer_zip": "promo/offline-kit/Flux-Evidence-Lab-Offline-Media-Kit.zip",
@@ -89,8 +138,18 @@
     "corresponding editable HTML and CSS"
   ],
   "claims_guardrail": {
-    "integrity_does_not_prove": ["upstream truth", "model correctness", "profitability", "long-term signer identity", "trusted timestamp"],
-    "software_tests_do_not_prove": ["prediction accuracy", "probability calibration", "strategy profitability"]
+    "integrity_does_not_prove": [
+      "upstream truth",
+      "model correctness",
+      "profitability",
+      "long-term signer identity",
+      "trusted timestamp"
+    ],
+    "software_tests_do_not_prove": [
+      "prediction accuracy",
+      "probability calibration",
+      "strategy profitability"
+    ]
   },
   "human_confirmation_required": [
     "official rule version",

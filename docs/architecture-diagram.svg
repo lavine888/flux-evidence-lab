@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+  <title id="title">Flux Evidence Lab system architecture</title>
+  <desc id="desc">Synthetic fixtures, keyless public APIs, or optional local research enter an evidence pipeline that binds raw values to whitelisted transforms, normalized model features, source health, feature coverage, and an independent risk reference price. A versioned model, deterministic paper risk veto, simulator, SHA-256 chain, and ephemeral Ed25519 manifest form the signed artifact path. Runtime audit metrics remain explicitly outside the signed boundary.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4f5d59"/>
+    </marker>
+    <marker id="risk-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#a56212"/>
+    </marker>
+    <style>
+      .label { font: 700 18px 'Segoe UI', Arial, sans-serif; fill: #17201f; }
+      .small { font: 14px 'Segoe UI', Arial, sans-serif; fill: #4f5d59; }
+      .stage { font: 700 12px 'Segoe UI', Arial, sans-serif; fill: #087c70; }
+      .stage-unsigned { font: 700 12px 'Segoe UI', Arial, sans-serif; fill: #7a4d19; }
+      .mono { font: 13px Consolas, monospace; fill: #33413e; }
+      .mono-compact { font: 12px Consolas, monospace; fill: #33413e; }
+      .box { fill: #ffffff; stroke: #b9c3bf; stroke-width: 2; rx: 7; }
+      .core { fill: #ecf4f0; stroke: #087c70; stroke-width: 2; rx: 7; }
+      .risk { fill: #fff3df; stroke: #a56212; stroke-width: 2; rx: 7; }
+      .audit { fill: #ebf1f8; stroke: #2d5f9a; stroke-width: 2; rx: 7; }
+      .output { fill: #e8f5ee; stroke: #167452; stroke-width: 2; rx: 7; }
+      .unsigned { fill: #fffaf1; stroke: #a56212; stroke-width: 2; stroke-dasharray: 8 7; rx: 7; }
+      .flow { fill: none; stroke: #4f5d59; stroke-width: 2.5; marker-end: url(#arrow); }
+      .optional { fill: none; stroke: #66716e; stroke-width: 2; stroke-dasharray: 8 7; marker-end: url(#arrow); }
+      .reference { fill: none; stroke: #a56212; stroke-width: 2.5; stroke-dasharray: 7 6; marker-end: url(#risk-arrow); }
+      .telemetry { fill: none; stroke: #a56212; stroke-width: 2; stroke-dasharray: 7 6; marker-end: url(#risk-arrow); }
+    </style>
+  </defs>
+
+  <rect width="1440" height="900" fill="#f7faf9"/>
+  <text x="64" y="58" class="label" style="font-size:28px">Flux Evidence Lab</text>
+  <text x="64" y="88" class="small">Evidence-bound BTC paper decision and verification architecture</text>
+
+  <text x="64" y="142" class="stage">INPUT BOUNDARY</text>
+  <rect x="64" y="164" width="238" height="142" class="box"/>
+  <text x="88" y="202" class="label">Offline fixtures</text>
+  <text x="88" y="230" class="small">Synthetic demo only</text>
+  <text x="88" y="257" class="mono">no keys · no network</text>
+  <text x="88" y="282" class="mono-compact">fixture provenance retained</text>
+
+  <rect x="64" y="334" width="238" height="142" class="box"/>
+  <text x="88" y="372" class="label">Public + local inputs</text>
+  <text x="88" y="400" class="small">public-btc-live · 4 APIs</text>
+  <text x="88" y="427" class="mono">HTTPS / local :8790</text>
+  <text x="88" y="452" class="mono-compact">read-only · no fallback data</text>
+
+  <text x="350" y="142" class="stage">VERIFIABLE DECISION CORE</text>
+  <rect x="350" y="164" width="250" height="142" class="core"/>
+  <text x="374" y="202" class="label">Evidence binding</text>
+  <text x="374" y="229" class="small">Raw value → whitelist transform</text>
+  <text x="374" y="254" class="small">→ normalized model value</text>
+  <text x="374" y="280" class="mono-compact">source_health · coverage</text>
+
+  <rect x="650" y="164" width="205" height="142" class="core"/>
+  <text x="674" y="202" class="label">Probability model</text>
+  <text x="674" y="230" class="small">BUY / HOLD / SELL</text>
+  <text x="674" y="257" class="mono-compact">version · factors</text>
+  <text x="674" y="282" class="mono-compact">direct candidate_action</text>
+
+  <rect x="905" y="164" width="205" height="142" class="risk"/>
+  <text x="929" y="202" class="label">Paper risk veto</text>
+  <text x="929" y="230" class="small">Freshness · coverage · price</text>
+  <text x="929" y="257" class="small">Confidence · position limits</text>
+  <text x="929" y="282" class="mono-compact">final veto authority</text>
+
+  <rect x="1160" y="164" width="216" height="142" class="output"/>
+  <text x="1184" y="202" class="label">Local simulator</text>
+  <text x="1184" y="230" class="small">Paper result or no order</text>
+  <text x="1184" y="257" class="mono-compact">external_route: DISABLED</text>
+  <text x="1184" y="282" class="mono-compact">real_funds: false</text>
+
+  <path d="M302 235 H350" class="flow"/>
+  <path d="M302 405 H326 V276 H350" class="optional"/>
+  <path d="M600 235 H650" class="flow"/>
+  <path d="M855 235 H905" class="flow"/>
+  <path d="M1110 235 H1160" class="flow"/>
+
+  <path d="M475 306 V356 H1007 V306" class="reference"/>
+  <rect x="622" y="338" width="356" height="34" fill="#f7faf9"/>
+  <text x="800" y="360" text-anchor="middle" class="mono-compact" style="fill:#7a4d19">RISK_REFERENCE · evidence_id + exact USD</text>
+
+  <text x="350" y="430" class="stage">SIGNED INTEGRITY PATH</text>
+  <rect x="350" y="452" width="316" height="142" class="audit"/>
+  <text x="374" y="490" class="label">Canonical JSON + SHA-256</text>
+  <text x="374" y="518" class="small">evidence → model → risk → order</text>
+  <text x="374" y="545" class="mono-compact">decision_id · chained step hashes</text>
+  <text x="374" y="570" class="mono-compact">raw · transform · source health signed</text>
+
+  <rect x="716" y="452" width="310" height="142" class="audit"/>
+  <text x="740" y="490" class="label">Ed25519 manifest</text>
+  <text x="740" y="518" class="small">Chain head + artifact hash</text>
+  <text x="740" y="545" class="mono-compact">ephemeral runtime key</text>
+  <text x="740" y="570" class="mono-compact">integrity proof · not identity trust</text>
+
+  <path d="M1268 306 V398 H508 V452" class="flow"/>
+  <path d="M666 523 H716" class="flow"/>
+
+  <text x="1080" y="430" class="stage">JUDGE SURFACES</text>
+  <rect x="1080" y="452" width="296" height="142" class="output"/>
+  <text x="1104" y="490" class="label">Console + audit JSON</text>
+  <text x="1104" y="518" class="small">Explain, download, re-verify</text>
+  <text x="1104" y="545" class="mono-compact">artifact + verification result</text>
+  <text x="1104" y="570" class="mono-compact">localhost:8810</text>
+  <path d="M1026 523 H1080" class="flow"/>
+
+  <text x="710" y="646" class="stage-unsigned">UNSIGNED OBSERVABILITY BOUNDARY</text>
+  <rect x="710" y="666" width="666" height="82" class="unsigned"/>
+  <text x="734" y="700" class="label">Runtime audit_metrics</text>
+  <text x="734" y="726" class="small">Collection / decision / verification latency · artifact bytes</text>
+  <text x="1118" y="701" class="mono-compact" style="fill:#7a4d19">API ENVELOPE ONLY</text>
+  <text x="1118" y="726" class="mono-compact" style="fill:#7a4d19">UNSIGNED · NOT IN MANIFEST</text>
+  <path d="M1228 594 V666" class="telemetry"/>
+
+  <rect x="64" y="784" width="1312" height="82" fill="#17201f" rx="7"/>
+  <text x="92" y="819" style="font:700 16px 'Segoe UI',Arial,sans-serif;fill:#80d7c8">ENFORCED SAFETY BOUNDARY</text>
+  <text x="92" y="848" style="font:15px 'Segoe UI',Arial,sans-serif;fill:#f7faf9">Paper simulation only · local execution · no exchange/wallet/real funds · human trigger · TEE/ZKP: not used</text>
+</svg>

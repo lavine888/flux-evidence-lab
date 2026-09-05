@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="BTC Paper-only 可验证决策评委控制台">
+  <title>Flux BTC 可验证决策台</title>
+  <link rel="stylesheet" href="/styles.css?v=20260902-judge-console-2">
+  <link rel="stylesheet" href="/style-05.css?v=20260903-production-2">
+</head>
+<body>
+  <div class="system-ribbon" aria-label="运行与执行边界">
+    <span>LOCAL VERIFIABLE RESEARCH NODE</span>
+    <strong>FLUX EVIDENCE LAB</strong>
+    <span>BTC-USD · PAPER EXECUTION ONLY</span>
+  </div>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="项目导航">
+      <div class="brand-lockup">
+        <span class="brand-mark" aria-hidden="true">F</span>
+        <div>
+          <strong>FLUX EVIDENCE LAB</strong>
+          <span>Verifiable BTC Agent · 05</span>
+        </div>
+      </div>
+
+      <nav class="side-nav" aria-label="控制台模块">
+        <a class="nav-item is-active" href="#decision-workspace" aria-current="page"><span>01</span>决策总览</a>
+        <a class="nav-item" href="#evidence-ledger"><span>02</span>证据账本</a>
+        <a class="nav-item" href="#decision-panels"><span>03</span>模型与风控</a>
+        <a class="nav-item" href="#integrity-panel"><span>04</span>完整性验证</a>
+        <a class="nav-item" href="#boundary-panel"><span>05</span>边界与限制</a>
+      </nav>
+
+      <div class="scope-block">
+        <span>执行能力</span>
+        <strong>Paper-only</strong>
+        <dl>
+          <div><dt>真实资金</dt><dd>禁用</dd></div>
+          <div><dt>外部订单路由</dt><dd>物理不可用</dd></div>
+          <div><dt>收益声明</dt><dd>无</dd></div>
+        </dl>
+      </div>
+    </aside>
+
+    <main class="workspace" id="decision-workspace">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">AIx Origin Summit · Flux Track</p>
+          <h1>BTC 可验证决策台</h1>
+        </div>
+        <div class="topbar-statuses">
+          <span class="mode-badge">PAPER ONLY</span>
+          <div class="runtime-status" id="runtimeStatus" role="status" aria-live="polite">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span id="runtimeStatusText">正在检查核心服务</span>
+          </div>
+        </div>
+      </header>
+
+      <section class="command-band" aria-labelledby="scenarioTitle">
+        <div class="asset-command">
+          <span class="asset-symbol" aria-hidden="true">₿</span>
+          <div>
+            <p class="micro-label">研究资产</p>
+            <h2 id="scenarioTitle">BTC / USD</h2>
+            <p id="scenarioDescription">真实公开数据、确定性归一化与 Paper-only 决策。</p>
+          </div>
+        </div>
+        <div class="scenario-control">
+          <label for="scenarioSelect">评审场景</label>
+          <select id="scenarioSelect">
+            <option value="public-btc-live" selected>真实公开数据（免 Key）</option>
+            <option value="local-8790">本地 8790 多源研究</option>
+            <option value="offline-constructive">离线建设性</option>
+            <option value="stale-evidence">证据过期阻断</option>
+            <option value="risk-limit">超限阻断</option>
+          </select>
+        </div>
+        <button class="primary-button" id="runButton" type="button"><span aria-hidden="true">▶</span>运行决策</button>
+      </section>
+
+      <section class="summary-band" aria-label="当前决策摘要">
+        <article class="summary-cell asset-cell">
+          <span>资产 / 数据边界</span>
+          <strong id="assetSummary">BTC · --</strong>
+          <small id="classificationSummary">等待场景运行</small>
+        </article>
+        <article class="summary-cell decision-cell">
+          <span>最终决策</span>
+          <strong id="decisionVerdict">--</strong>
+          <small id="decisionReason">尚未生成候选信号</small>
+        </article>
+        <article class="summary-cell market-data-cell">
+          <span>BTC 公开价格</span>
+          <strong id="btcPrice">--</strong>
+          <small id="marketChange">真实数据场景按请求抓取</small>
+        </article>
+        <article class="summary-cell health-cell">
+          <span>数据健康 / 特征覆盖</span>
+          <strong id="dataHealthSummary">--</strong>
+          <small id="coverageSummary">0 / 8 个模型特征</small>
+        </article>
+        <article class="summary-cell verification-cell">
+          <span>完整性验证</span>
+          <strong id="verificationSummary">--</strong>
+          <small id="verificationSubline">尚未生成签名</small>
+        </article>
+      </section>
+
+      <section class="decision-meta" aria-label="决策标识">
+        <div class="decision-id-wrap">
+          <span>decision_id</span>
+          <code id="decisionId">--</code>
+          <button class="icon-text-button" id="copyDecisionButton" type="button" disabled>复制 ID</button>
+        </div>
+        <dl>
+          <div><dt>research_id</dt><dd class="mono" id="researchId">--</dd></div>
+          <div><dt>as-of</dt><dd id="artifactAsOf">--</dd></div>
+          <div><dt>订单状态</dt><dd id="orderStatus">--</dd></div>
+        </dl>
+      </section>
+
+      <section class="pipeline-panel" aria-labelledby="pipelineTitle">
+        <header class="section-header compact-header">
+          <div>
+            <p class="panel-kicker">可验证执行图</p>
+            <h2 id="pipelineTitle">采集 → 归一化 → 模型 → 风控 → 签名 → 验签</h2>
+          </div>
+          <span class="plain-meta" id="pipelineSummary">等待运行</span>
+        </header>
+        <ol class="pipeline" id="pipelineList">
+          <li id="pipelineCollect"><span>01</span><div><strong>采集</strong><small>证据与来源</small></div><i>待运行</i></li>
+          <li id="pipelineNormalize"><span>02</span><div><strong>归一化</strong><small>特征映射</small></div><i>待运行</i></li>
+          <li id="pipelineModel"><span>03</span><div><strong>模型</strong><small>候选概率</small></div><i>待运行</i></li>
+          <li id="pipelineRisk"><span>04</span><div><strong>风控</strong><small>确定性否决</small></div><i>待运行</i></li>
+          <li id="pipelineSign"><span>05</span><div><strong>签名</strong><small>Ed25519</small></div><i>待运行</i></li>
+          <li id="pipelineVerify"><span>06</span><div><strong>验签</strong><small>离线重放</small></div><i>待运行</i></li>
+        </ol>
+      </section>
+
+      <section class="panel evidence-panel" id="evidence-ledger" aria-labelledby="evidenceTitle">
+        <header class="section-header">
+          <div>
+            <p class="panel-kicker">证据绑定输入</p>
+            <h2 id="evidenceTitle">Evidence 账本</h2>
+            <p>源指标与变换均绑定到同一 research_id；公开特征的原始值由可逆公式精确重建并明确标注。</p>
+          </div>
+          <div class="header-stats">
+            <span><b id="evidenceCount">0</b> 条证据</span>
+            <span><b id="sourceCount">0 / 0</b> 来源健康</span>
+          </div>
+        </header>
+        <div class="evidence-table-wrap">
+          <table class="evidence-table">
+            <thead>
+              <tr>
+                <th>Evidence / 指标</th>
+                <th>原始值</th>
+                <th>确定性变换</th>
+                <th>标准化值</th>
+                <th>来源</th>
+                <th>As-of</th>
+              </tr>
+            </thead>
+            <tbody id="evidenceTableBody">
+              <tr class="empty-row"><td colspan="6">尚未生成证据账本</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="source-health-strip" id="sourceHealthList" aria-label="数据来源健康状态"><span class="empty-inline">来源状态将在运行后显示</span></div>
+      </section>
+
+      <section class="decision-grid" id="decision-panels" aria-label="模型与风控">
+        <article class="panel model-panel">
+          <header class="section-header">
+            <div>
+              <p class="panel-kicker">概率模型 · 直接候选信号</p>
+              <h2>模型推理</h2>
+            </div>
+            <div class="model-result"><span id="candidateAction">--</span><strong id="modelProbability">--</strong></div>
+          </header>
+          <div class="class-probabilities" id="classProbabilities">
+            <div><span>BUY</span><b>--</b><i><em></em></i></div>
+            <div><span>HOLD</span><b>--</b><i><em></em></i></div>
+            <div><span>SELL</span><b>--</b><i><em></em></i></div>
+          </div>
+          <div class="threshold-row">
+            <span>候选置信度</span>
+            <div class="probability-track"><i id="probabilityBar"></i><b id="thresholdMarker"></b></div>
+            <small id="thresholdLabel">风控阈值 --</small>
+          </div>
+          <p class="factor-context" id="factorContext">候选动作的 logit 因子贡献</p>
+          <div class="factor-list" id="factorList"><p class="empty-state">尚未生成因子贡献</p></div>
+          <footer class="model-diagnostics">
+            <span id="modelVersion">模型版本 --</span>
+            <span id="missingFeatures">缺失特征 --</span>
+            <span id="modelUncertainty">未校准误差 --</span>
+          </footer>
+        </article>
+
+        <article class="panel risk-panel">
+          <header class="section-header">
+            <div>
+              <p class="panel-kicker">确定性最终否决</p>
+              <h2>风控规则</h2>
+            </div>
+            <span class="status-pill neutral" id="riskSummary">等待检查</span>
+          </header>
+          <ol class="risk-list" id="riskList"><li class="empty-state">尚未运行风控</li></ol>
+          <footer class="authority-footer"><span>权限顺序</span><strong>Risk veto &gt; model signal</strong></footer>
+        </article>
+      </section>
+
+      <section class="integrity-grid" id="integrity-panel" aria-label="哈希链、签名与验签">
+        <article class="panel hash-panel">
+          <header class="section-header">
+            <div>
+              <p class="panel-kicker">SHA-256 链式审计</p>
+              <h2>步骤哈希链</h2>
+            </div>
+            <span class="plain-meta" id="hashCount">0 步</span>
+          </header>
+          <ol class="hash-chain" id="hashChain"><li class="empty-state">尚未生成哈希链</li></ol>
+        </article>
+
+        <article class="panel signature-panel">
+          <header class="section-header">
+            <div>
+              <p class="panel-kicker">Ed25519 · 临时运行时密钥</p>
+              <h2>签名与离线验签</h2>
+            </div>
+            <span class="status-pill neutral" id="signatureStatus">未验证</span>
+          </header>
+          <dl class="signature-details">
+            <div><dt>算法</dt><dd id="signatureAlgorithm">--</dd></div>
+            <div><dt>签名时间</dt><dd id="signatureTime">--</dd></div>
+            <div><dt>Artifact Hash</dt><dd class="mono break-all" id="artifactHash">--</dd></div>
+            <div><dt>Chain Head</dt><dd class="mono break-all" id="chainHead">--</dd></div>
+            <div><dt>Key Fingerprint</dt><dd class="mono break-all" id="signatureKeyId">--</dd></div>
+          </dl>
+          <div class="verification-checks" id="verificationChecks"><span class="empty-inline">尚未执行完整性检查</span></div>
+          <details class="key-material">
+            <summary>签名材料</summary>
+            <dl>
+              <div><dt>公钥</dt><dd class="mono break-all" id="signaturePublicKey">--</dd></div>
+              <div><dt>签名</dt><dd class="mono break-all" id="signatureValue">--</dd></div>
+            </dl>
+          </details>
+          <div class="tamper-result neutral" id="tamperResult" role="status">篡改副本尚未测试，原始 artifact 保持不变。</div>
+        </article>
+      </section>
+
+      <section class="boundary-grid" id="boundary-panel" aria-label="覆盖率、责任边界与模型限制">
+        <article class="boundary-section">
+          <p class="panel-kicker">Coverage</p>
+          <h2>当前覆盖率</h2>
+          <dl>
+            <div><dt>签名证据</dt><dd id="coverageEvidence">0 条</dd></div>
+            <div><dt>模型特征</dt><dd id="coverageFeatures">0 / 8</dd></div>
+            <div><dt>健康来源</dt><dd id="coverageSources">0 / 0</dd></div>
+            <div><dt>证据最大年龄</dt><dd id="coverageAge">--</dd></div>
+            <div><dt>本次总耗时</dt><dd id="auditLatency">--</dd></div>
+            <div><dt>审计产物</dt><dd id="auditSize">--</dd></div>
+          </dl>
+        </article>
+        <article class="boundary-section">
+          <p class="panel-kicker">Responsibility</p>
+          <h2>自动 / 人工边界</h2>
+          <ul class="boundary-list">
+            <li><span class="boundary-tag auto">自动</span>采集、归一化、模型、风控、签名、验签</li>
+            <li><span class="boundary-tag human">人工</span>选择场景、审阅证据、导出报告</li>
+            <li><span class="boundary-tag blocked">禁止</span>真实资金与外部订单路由</li>
+          </ul>
+        </article>
+        <article class="boundary-section model-limitations">
+          <p class="panel-kicker">Model Risk</p>
+          <h2>误差与限制</h2>
+          <ul>
+            <li id="performanceClaim">绩效声明：NONE</li>
+            <li id="uncertaintyStatement">概率未做生产级校准，不代表收益概率。</li>
+            <li id="missingFeatureBoundary">缺失特征按 0 处理并显式披露。</li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="report-toolbar" aria-label="报告操作">
+        <div>
+          <strong>结构化审计报告</strong>
+          <span id="reportTimestamp">尚未生成</span>
+        </div>
+        <div class="toolbar-actions">
+          <button class="secondary-button" id="verifyButton" type="button" disabled>验证原件</button>
+          <button class="danger-outline-button" id="tamperButton" type="button" disabled>篡改副本测试</button>
+          <button class="quiet-button" id="toggleRawButton" type="button" disabled>查看 JSON</button>
+          <button class="secondary-button" id="downloadButton" type="button" disabled>下载报告</button>
+        </div>
+      </section>
+      <pre class="raw-report" id="rawReport" hidden aria-label="原始 JSON 报告"></pre>
+
+      <footer class="disclaimer-band">
+        <strong>非投资建议</strong>
+        <p>本项目仅用于比赛演示、研究与软件验证。所有订单均为本地 Paper 模拟，不连接真实资金；模型系数为透明演示参数，不声明历史或未来收益，不构成投资、交易、法律或税务建议。</p>
+      </footer>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script src="/app.js?v=20260902-judge-console-2" defer></script>
+</body>
+</html>

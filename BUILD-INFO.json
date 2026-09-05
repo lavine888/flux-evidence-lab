@@ -3,6 +3,8 @@
   "generated_at_utc": "2026-09-04T02:16:17.6178666Z",
   "source_portable_zip": "Flux-Evidence-Lab-Portable-Windows-x64.zip",
   "source_portable_zip_sha256": "dcb1cabf546c3aad160b14ea03a4737326bf6665e8e446e216c22550174d5a54",
+  "artifact_status": "HISTORICAL_HANDOFF_METADATA_NOT_A_CURRENT_SOURCE_BUILD",
+  "source_portable_zip_in_current_checkout": false,
   "execution_mode": "PAPER_ONLY",
   "external_order_route": "DISABLED",
   "user_requested_exclusions": [

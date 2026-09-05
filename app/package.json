@@ -1,0 +1,15 @@
+{
+  "name": "flux-evidence-lab",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Evidence-bound, verifiable BTC paper-decision agent for the AIx Origin Summit Flux track.",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test test/*.test.mjs",
+    "check": "node --check server.js && node --check public/app.js"
+  },
+  "engines": {
+    "node": ">=20.11.0"
+  }
+}

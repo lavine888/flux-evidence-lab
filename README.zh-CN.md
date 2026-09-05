@@ -1,5 +1,7 @@
 # Flux Evidence Lab 队友现场包
 
+> **入口边界：** 本页是完整 Windows 便携 handoff 的现场说明，不是普通 GitHub 源码 checkout 的启动说明。当前源码 checkout 请先阅读根目录 [`README.md`](README.md)，再在 `app/` 执行 Node.js Quick Start；只有拿到包含匹配 `runtime/`、`manifest.sha256`、`tools/*.ps1` 和线下物料的完整便携包时，才运行本页的 `VERIFY-FILES.cmd`、`START-FLUX.cmd` 和 `OPEN-MEDIA-KIT.cmd`。
+
 先完整解压 ZIP，不要在压缩包预览窗口内直接运行。
 
 ## 现场 30 秒启动
@@ -69,7 +71,7 @@ Flux Evidence Lab 是一个 BTC Paper-only 可验证决策 Agent。它把公开 
 
 | 路径 | 用途 |
 | --- | --- |
-| `app/` | Agent、前端、模型、场景和 30 项测试源码 |
+| `app/` | Agent、前端、模型、场景和当前源码测试 |
 | `docs/` | 架构、合规、演示、测试和比赛要求 |
 | `promo/` | 正式线下物料、UI 截图和宣传文案 |
 | `runtime/node.exe` | 内嵌 Node.js Windows x64 运行时 |

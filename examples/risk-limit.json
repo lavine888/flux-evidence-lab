@@ -1,0 +1,582 @@
+{
+  "schema_version": "flux-verifiable-btc-decision@1.0.0",
+  "decision_id": "btc_dec_099feab304bd5a369bf3c24a",
+  "research_id": "btc_res_51d5a4aa56d632dae2a7e831",
+  "asset": "BTC",
+  "scenario_id": "risk-limit",
+  "as_of": "2026-09-01T04:00:00.000Z",
+  "data_classification": "SYNTHETIC_DEMO",
+  "safety": {
+    "data_boundary": "SYNTHETIC_OR_PUBLIC_DEMO_ONLY",
+    "execution_capability": "PAPER_SIMULATION_ONLY",
+    "external_order_route": "PHYSICALLY_UNAVAILABLE",
+    "real_funds": false,
+    "investment_advice": false
+  },
+  "model": {
+    "model_family": "multinomial_logistic_regression",
+    "model_version": "btc-multinomial-logit@1.0.0",
+    "inference_role": "DIRECT_CANDIDATE_SIGNAL",
+    "performance_claim": "NONE"
+  },
+  "limitations": [
+    "Coefficients are transparent demo parameters, not evidence of future returns.",
+    "Output is a candidate signal and remains subject to deterministic paper-only risk vetoes.",
+    "The artifact cannot place or route a live order."
+  ],
+  "disclaimer": "Synthetic/public demo evidence; not investment advice and not a live-trading input.",
+  "outcome": {
+    "candidate_action": "BUY",
+    "candidate_probability": 0.937082,
+    "final_action": "HOLD",
+    "risk_status": "BLOCK",
+    "risk_vetoed": true,
+    "order_status": "NOT_CREATED"
+  },
+  "steps": [
+    {
+      "sequence": 1,
+      "stage": "evidence",
+      "decision_id": "btc_dec_099feab304bd5a369bf3c24a",
+      "previous_hash": "GENESIS",
+      "payload": {
+        "research_id": "btc_res_51d5a4aa56d632dae2a7e831",
+        "asset": "BTC",
+        "scenario_id": "risk-limit",
+        "as_of": "2026-09-01T04:00:00.000Z",
+        "data_classification": "SYNTHETIC_DEMO",
+        "collection": {
+          "adapter_id": "repository-fixture@1.0.0",
+          "mode": "SYNTHETIC_FIXTURE",
+          "collected_at": "2026-09-01T04:00:00.000Z",
+          "expected_source_ids": [],
+          "expected_source_count": 0,
+          "reported_source_count": 0,
+          "ok_source_count": 0,
+          "error_source_count": 0,
+          "missing_source_ids": [],
+          "unexpected_source_ids": [],
+          "status": "NOT_APPLICABLE"
+        },
+        "source_health": [],
+        "evidence_items": [
+          {
+            "evidence_id": "syn_developer_activity_z",
+            "metric": "developer_activity_z",
+            "role": "MODEL_FEATURE",
+            "value": 0.5,
+            "unit": "z_score",
+            "raw": null,
+            "transform_id": null,
+            "observed_at": "2026-09-01T03:30:00.000Z",
+            "classification": "SYNTHETIC_DEMO",
+            "source": {
+              "id": null,
+              "name": "Flux BTC Synthetic Fixture Generator",
+              "category": null,
+              "type": "SYNTHETIC",
+              "url": null,
+              "retrieved_at": null,
+              "as_of": null,
+              "timestamp_basis": null,
+              "status": "ok"
+            }
+          },
+          {
+            "evidence_id": "syn_exchange_netflow_z",
+            "metric": "exchange_netflow_z",
+            "role": "MODEL_FEATURE",
+            "value": -1.1,
+            "unit": "z_score",
+            "raw": null,
+            "transform_id": null,
+            "observed_at": "2026-09-01T03:30:00.000Z",
+            "classification": "SYNTHETIC_DEMO",
+            "source": {
+              "id": null,
+              "name": "Flux BTC Synthetic Fixture Generator",
+              "category": null,
+              "type": "SYNTHETIC",
+              "url": null,
+              "retrieved_at": null,
+              "as_of": null,
+              "timestamp_basis": null,
+              "status": "ok"
+            }
+          },
+          {
+            "evidence_id": "syn_macro_liquidity_z",
+            "metric": "macro_liquidity_z",
+            "role": "MODEL_FEATURE",
+            "value": 0.6,
+            "unit": "z_score",
+            "raw": null,
+            "transform_id": null,
+            "observed_at": "2026-09-01T03:30:00.000Z",
+            "classification": "SYNTHETIC_DEMO",
+            "source": {
+              "id": null,
+              "name": "Flux BTC Synthetic Fixture Generator",
+              "category": null,
+              "type": "SYNTHETIC",
+              "url": null,
+              "retrieved_at": null,
+              "as_of": null,
+              "timestamp_basis": null,
+              "status": "ok"
+            }
+          },
+          {
+            "evidence_id": "syn_network_activity_z",
+            "metric": "network_activity_z",
+            "role": "MODEL_FEATURE",
+            "value": 1.2,
+            "unit": "z_score",
+            "raw": null,
+            "transform_id": null,
+            "observed_at": "2026-09-01T03:30:00.000Z",
+            "classification": "SYNTHETIC_DEMO",
+            "source": {
+              "id": null,
+              "name": "Flux BTC Synthetic Fixture Generator",
+              "category": null,
+              "type": "SYNTHETIC",
+              "url": null,
+              "retrieved_at": null,
+              "as_of": null,
+              "timestamp_basis": null,
+              "status": "ok"
+            }
+          },
+          {
+            "evidence_id": "syn_price_momentum_z",
+            "metric": "price_momentum_z",
+            "role": "MODEL_FEATURE",
+            "value": 1.1,
+            "unit": "z_score",
+            "raw": null,
+            "transform_id": null,
+            "observed_at": "2026-09-01T03:30:00.000Z",
+            "classification": "SYNTHETIC_DEMO",
+            "source": {
+              "id": null,
+              "name": "Flux BTC Synthetic Fixture Generator",
+              "category": null,
+              "type": "SYNTHETIC",
+              "url": null,
+              "retrieved_at": null,
+              "as_of": null,
+              "timestamp_basis": null,
+              "status": "ok"
+            }
+          },
+          {
+            "evidence_id": "syn_realized_cap_growth_z",
+            "metric": "realized_cap_growth_z",
+            "role": "MODEL_FEATURE",
+            "value": 0.9,
+            "unit": "z_score",
+            "raw": null,
+            "transform_id": null,
+            "observed_at": "2026-09-01T03:30:00.000Z",
+            "classification": "SYNTHETIC_DEMO",
+            "source": {
+              "id": null,
+              "name": "Flux BTC Synthetic Fixture Generator",
+              "category": null,
+              "type": "SYNTHETIC",
+              "url": null,
+              "retrieved_at": null,
+              "as_of": null,
+              "timestamp_basis": null,
+              "status": "ok"
+            }
+          },
+          {
+            "evidence_id": "syn_regulatory_risk_z",
+            "metric": "regulatory_risk_z",
+            "role": "MODEL_FEATURE",
+            "value": -0.7,
+            "unit": "z_score",
+            "raw": null,
+            "transform_id": null,
+            "observed_at": "2026-09-01T03:30:00.000Z",
+            "classification": "SYNTHETIC_DEMO",
+            "source": {
+              "id": null,
+              "name": "Flux BTC Synthetic Fixture Generator",
+              "category": null,
+              "type": "SYNTHETIC",
+              "url": null,
+              "retrieved_at": null,
+              "as_of": null,
+              "timestamp_basis": null,
+              "status": "ok"
+            }
+          },
+          {
+            "evidence_id": "syn_social_sentiment_z",
+            "metric": "social_sentiment_z",
+            "role": "MODEL_FEATURE",
+            "value": 0.8,
+            "unit": "z_score",
+            "raw": null,
+            "transform_id": null,
+            "observed_at": "2026-09-01T03:30:00.000Z",
+            "classification": "SYNTHETIC_DEMO",
+            "source": {
+              "id": null,
+              "name": "Flux BTC Synthetic Fixture Generator",
+              "category": null,
+              "type": "SYNTHETIC",
+              "url": null,
+              "retrieved_at": null,
+              "as_of": null,
+              "timestamp_basis": null,
+              "status": "ok"
+            }
+          }
+        ],
+        "evidence_summary": {
+          "item_count": 8,
+          "public_item_count": 0,
+          "synthetic_item_count": 8,
+          "public_transform_count": 0,
+          "risk_reference_count": 0,
+          "source_count": 1,
+          "source_names": [
+            "Flux BTC Synthetic Fixture Generator"
+          ],
+          "source_health_count": 0,
+          "source_ok_count": 0,
+          "source_error_count": 0,
+          "model_feature_count": 8,
+          "expected_model_feature_count": 8,
+          "model_feature_coverage": 1,
+          "missing_model_features": [],
+          "max_age_minutes": 30,
+          "min_age_minutes": 30,
+          "future_item_count": 0
+        },
+        "usage_boundary": "RESEARCH_AND_PAPER_SIMULATION_ONLY",
+        "disclaimer": "Synthetic/public demo evidence; not investment advice and not a live-trading input."
+      },
+      "canonical_json": "{\"decision_id\":\"btc_dec_099feab304bd5a369bf3c24a\",\"payload\":{\"as_of\":\"2026-09-01T04:00:00.000Z\",\"asset\":\"BTC\",\"collection\":{\"adapter_id\":\"repository-fixture@1.0.0\",\"collected_at\":\"2026-09-01T04:00:00.000Z\",\"error_source_count\":0,\"expected_source_count\":0,\"expected_source_ids\":[],\"missing_source_ids\":[],\"mode\":\"SYNTHETIC_FIXTURE\",\"ok_source_count\":0,\"reported_source_count\":0,\"status\":\"NOT_APPLICABLE\",\"unexpected_source_ids\":[]},\"data_classification\":\"SYNTHETIC_DEMO\",\"disclaimer\":\"Synthetic/public demo evidence; not investment advice and not a live-trading input.\",\"evidence_items\":[{\"classification\":\"SYNTHETIC_DEMO\",\"evidence_id\":\"syn_developer_activity_z\",\"metric\":\"developer_activity_z\",\"observed_at\":\"2026-09-01T03:30:00.000Z\",\"raw\":null,\"role\":\"MODEL_FEATURE\",\"source\":{\"as_of\":null,\"category\":null,\"id\":null,\"name\":\"Flux BTC Synthetic Fixture Generator\",\"retrieved_at\":null,\"status\":\"ok\",\"timestamp_basis\":null,\"type\":\"SYNTHETIC\",\"url\":null},\"transform_id\":null,\"unit\":\"z_score\",\"value\":0.5},{\"classification\":\"SYNTHETIC_DEMO\",\"evidence_id\":\"syn_exchange_netflow_z\",\"metric\":\"exchange_netflow_z\",\"observed_at\":\"2026-09-01T03:30:00.000Z\",\"raw\":null,\"role\":\"MODEL_FEATURE\",\"source\":{\"as_of\":null,\"category\":null,\"id\":null,\"name\":\"Flux BTC Synthetic Fixture Generator\",\"retrieved_at\":null,\"status\":\"ok\",\"timestamp_basis\":null,\"type\":\"SYNTHETIC\",\"url\":null},\"transform_id\":null,\"unit\":\"z_score\",\"value\":-1.1},{\"classification\":\"SYNTHETIC_DEMO\",\"evidence_id\":\"syn_macro_liquidity_z\",\"metric\":\"macro_liquidity_z\",\"observed_at\":\"2026-09-01T03:30:00.000Z\",\"raw\":null,\"role\":\"MODEL_FEATURE\",\"source\":{\"as_of\":null,\"category\":null,\"id\":null,\"name\":\"Flux BTC Synthetic Fixture Generator\",\"retrieved_at\":null,\"status\":\"ok\",\"timestamp_basis\":null,\"type\":\"SYNTHETIC\",\"url\":null},\"transform_id\":null,\"unit\":\"z_score\",\"value\":0.6},{\"classification\":\"SYNTHETIC_DEMO\",\"evidence_id\":\"syn_network_activity_z\",\"metric\":\"network_activity_z\",\"observed_at\":\"2026-09-01T03:30:00.000Z\",\"raw\":null,\"role\":\"MODEL_FEATURE\",\"source\":{\"as_of\":null,\"category\":null,\"id\":null,\"name\":\"Flux BTC Synthetic Fixture Generator\",\"retrieved_at\":null,\"status\":\"ok\",\"timestamp_basis\":null,\"type\":\"SYNTHETIC\",\"url\":null},\"transform_id\":null,\"unit\":\"z_score\",\"value\":1.2},{\"classification\":\"SYNTHETIC_DEMO\",\"evidence_id\":\"syn_price_momentum_z\",\"metric\":\"price_momentum_z\",\"observed_at\":\"2026-09-01T03:30:00.000Z\",\"raw\":null,\"role\":\"MODEL_FEATURE\",\"source\":{\"as_of\":null,\"category\":null,\"id\":null,\"name\":\"Flux BTC Synthetic Fixture Generator\",\"retrieved_at\":null,\"status\":\"ok\",\"timestamp_basis\":null,\"type\":\"SYNTHETIC\",\"url\":null},\"transform_id\":null,\"unit\":\"z_score\",\"value\":1.1},{\"classification\":\"SYNTHETIC_DEMO\",\"evidence_id\":\"syn_realized_cap_growth_z\",\"metric\":\"realized_cap_growth_z\",\"observed_at\":\"2026-09-01T03:30:00.000Z\",\"raw\":null,\"role\":\"MODEL_FEATURE\",\"source\":{\"as_of\":null,\"category\":null,\"id\":null,\"name\":\"Flux BTC Synthetic Fixture Generator\",\"retrieved_at\":null,\"status\":\"ok\",\"timestamp_basis\":null,\"type\":\"SYNTHETIC\",\"url\":null},\"transform_id\":null,\"unit\":\"z_score\",\"value\":0.9},{\"classification\":\"SYNTHETIC_DEMO\",\"evidence_id\":\"syn_regulatory_risk_z\",\"metric\":\"regulatory_risk_z\",\"observed_at\":\"2026-09-01T03:30:00.000Z\",\"raw\":null,\"role\":\"MODEL_FEATURE\",\"source\":{\"as_of\":null,\"category\":null,\"id\":null,\"name\":\"Flux BTC Synthetic Fixture Generator\",\"retrieved_at\":null,\"status\":\"ok\",\"timestamp_basis\":null,\"type\":\"SYNTHETIC\",\"url\":null},\"transform_id\":null,\"unit\":\"z_score\",\"value\":-0.7},{\"classification\":\"SYNTHETIC_DEMO\",\"evidence_id\":\"syn_social_sentiment_z\",\"metric\":\"social_sentiment_z\",\"observed_at\":\"2026-09-01T03:30:00.000Z\",\"raw\":null,\"role\":\"MODEL_FEATURE\",\"source\":{\"as_of\":null,\"category\":null,\"id\":null,\"name\":\"Flux BTC Synthetic Fixture Generator\",\"retrieved_at\":null,\"status\":\"ok\",\"timestamp_basis\":null,\"type\":\"SYNTHETIC\",\"url\":null},\"transform_id\":null,\"unit\":\"z_score\",\"value\":0.8}],\"evidence_summary\":{\"expected_model_feature_count\":8,\"future_item_count\":0,\"item_count\":8,\"max_age_minutes\":30,\"min_age_minutes\":30,\"missing_model_features\":[],\"model_feature_count\":8,\"model_feature_coverage\":1,\"public_item_count\":0,\"public_transform_count\":0,\"risk_reference_count\":0,\"source_count\":1,\"source_error_count\":0,\"source_health_count\":0,\"source_names\":[\"Flux BTC Synthetic Fixture Generator\"],\"source_ok_count\":0,\"synthetic_item_count\":8},\"research_id\":\"btc_res_51d5a4aa56d632dae2a7e831\",\"scenario_id\":\"risk-limit\",\"source_health\":[],\"usage_boundary\":\"RESEARCH_AND_PAPER_SIMULATION_ONLY\"},\"previous_hash\":\"GENESIS\",\"sequence\":1,\"stage\":\"evidence\"}",
+      "hash": "7069bbb0d8e7d781b346ef051fe67f3bd20c689a9b0cb6890333a2215f8a5a1e"
+    },
+    {
+      "sequence": 2,
+      "stage": "model",
+      "decision_id": "btc_dec_099feab304bd5a369bf3c24a",
+      "previous_hash": "7069bbb0d8e7d781b346ef051fe67f3bd20c689a9b0cb6890333a2215f8a5a1e",
+      "payload": {
+        "model_family": "multinomial_logistic_regression",
+        "model_version": "btc-multinomial-logit@1.0.0",
+        "candidate_action": "BUY",
+        "candidate_probability": 0.937082,
+        "class_probabilities": {
+          "BUY": 0.937082,
+          "HOLD": 0.062663,
+          "SELL": 0.000255
+        },
+        "logits": {
+          "BUY": 3.605,
+          "HOLD": 0.9,
+          "SELL": -4.605
+        },
+        "feature_vector": {
+          "network_activity_z": 1.2,
+          "exchange_netflow_z": -1.1,
+          "realized_cap_growth_z": 0.9,
+          "developer_activity_z": 0.5,
+          "social_sentiment_z": 0.8,
+          "price_momentum_z": 1.1,
+          "macro_liquidity_z": 0.6,
+          "regulatory_risk_z": -0.7
+        },
+        "feature_contributions": {
+          "BUY": {
+            "network_activity_z": 0.78,
+            "exchange_netflow_z": 0.825,
+            "realized_cap_growth_z": 0.495,
+            "developer_activity_z": 0.125,
+            "social_sentiment_z": 0.28,
+            "price_momentum_z": 0.77,
+            "macro_liquidity_z": 0.27,
+            "regulatory_risk_z": 0.56
+          },
+          "HOLD": {
+            "network_activity_z": 0,
+            "exchange_netflow_z": 0,
+            "realized_cap_growth_z": 0,
+            "developer_activity_z": 0,
+            "social_sentiment_z": 0,
+            "price_momentum_z": 0,
+            "macro_liquidity_z": 0,
+            "regulatory_risk_z": 0
+          },
+          "SELL": {
+            "network_activity_z": -0.78,
+            "exchange_netflow_z": -0.825,
+            "realized_cap_growth_z": -0.495,
+            "developer_activity_z": -0.125,
+            "social_sentiment_z": -0.28,
+            "price_momentum_z": -0.77,
+            "macro_liquidity_z": -0.27,
+            "regulatory_risk_z": -0.56
+          }
+        },
+        "missing_features": [],
+        "inference_role": "DIRECT_CANDIDATE_SIGNAL",
+        "performance_claim": "NONE"
+      },
+      "canonical_json": "{\"decision_id\":\"btc_dec_099feab304bd5a369bf3c24a\",\"payload\":{\"candidate_action\":\"BUY\",\"candidate_probability\":0.937082,\"class_probabilities\":{\"BUY\":0.937082,\"HOLD\":0.062663,\"SELL\":0.000255},\"feature_contributions\":{\"BUY\":{\"developer_activity_z\":0.125,\"exchange_netflow_z\":0.825,\"macro_liquidity_z\":0.27,\"network_activity_z\":0.78,\"price_momentum_z\":0.77,\"realized_cap_growth_z\":0.495,\"regulatory_risk_z\":0.56,\"social_sentiment_z\":0.28},\"HOLD\":{\"developer_activity_z\":0,\"exchange_netflow_z\":0,\"macro_liquidity_z\":0,\"network_activity_z\":0,\"price_momentum_z\":0,\"realized_cap_growth_z\":0,\"regulatory_risk_z\":0,\"social_sentiment_z\":0},\"SELL\":{\"developer_activity_z\":-0.125,\"exchange_netflow_z\":-0.825,\"macro_liquidity_z\":-0.27,\"network_activity_z\":-0.78,\"price_momentum_z\":-0.77,\"realized_cap_growth_z\":-0.495,\"regulatory_risk_z\":-0.56,\"social_sentiment_z\":-0.28}},\"feature_vector\":{\"developer_activity_z\":0.5,\"exchange_netflow_z\":-1.1,\"macro_liquidity_z\":0.6,\"network_activity_z\":1.2,\"price_momentum_z\":1.1,\"realized_cap_growth_z\":0.9,\"regulatory_risk_z\":-0.7,\"social_sentiment_z\":0.8},\"inference_role\":\"DIRECT_CANDIDATE_SIGNAL\",\"logits\":{\"BUY\":3.605,\"HOLD\":0.9,\"SELL\":-4.605},\"missing_features\":[],\"model_family\":\"multinomial_logistic_regression\",\"model_version\":\"btc-multinomial-logit@1.0.0\",\"performance_claim\":\"NONE\"},\"previous_hash\":\"7069bbb0d8e7d781b346ef051fe67f3bd20c689a9b0cb6890333a2215f8a5a1e\",\"sequence\":2,\"stage\":\"model\"}",
+      "hash": "9196a3fbee877586216e035fb1580ecd68a17b27fbb914c064a591e6f5a4b6cf"
+    },
+    {
+      "sequence": 3,
+      "stage": "risk",
+      "decision_id": "btc_dec_099feab304bd5a369bf3c24a",
+      "previous_hash": "9196a3fbee877586216e035fb1580ecd68a17b27fbb914c064a591e6f5a4b6cf",
+      "payload": {
+        "risk_policy_version": "btc-paper-risk@1.1.0",
+        "enforcement_role": "DETERMINISTIC_FINAL_VETO",
+        "candidate_action": "BUY",
+        "candidate_probability": 0.937082,
+        "status": "BLOCK",
+        "vetoed": true,
+        "final_action": "HOLD",
+        "failed_rule_ids": [
+          "ORDER_NOTIONAL_LIMIT"
+        ],
+        "rules": [
+          {
+            "rule_id": "PAPER_ONLY_MODE",
+            "passed": true,
+            "observed": "PAPER_SIMULATION",
+            "limit": "PAPER_OR_PAPER_SIMULATION"
+          },
+          {
+            "rule_id": "EVIDENCE_FRESHNESS",
+            "passed": true,
+            "observed": {
+              "stale_item_count": 0,
+              "items": [
+                {
+                  "evidence_id": "syn_developer_activity_z",
+                  "metric": "developer_activity_z",
+                  "age_minutes": 30,
+                  "limit_minutes": 180,
+                  "passed": true
+                },
+                {
+                  "evidence_id": "syn_exchange_netflow_z",
+                  "metric": "exchange_netflow_z",
+                  "age_minutes": 30,
+                  "limit_minutes": 180,
+                  "passed": true
+                },
+                {
+                  "evidence_id": "syn_macro_liquidity_z",
+                  "metric": "macro_liquidity_z",
+                  "age_minutes": 30,
+                  "limit_minutes": 180,
+                  "passed": true
+                },
+                {
+                  "evidence_id": "syn_network_activity_z",
+                  "metric": "network_activity_z",
+                  "age_minutes": 30,
+                  "limit_minutes": 180,
+                  "passed": true
+                },
+                {
+                  "evidence_id": "syn_price_momentum_z",
+                  "metric": "price_momentum_z",
+                  "age_minutes": 30,
+                  "limit_minutes": 180,
+                  "passed": true
+                },
+                {
+                  "evidence_id": "syn_realized_cap_growth_z",
+                  "metric": "realized_cap_growth_z",
+                  "age_minutes": 30,
+                  "limit_minutes": 180,
+                  "passed": true
+                },
+                {
+                  "evidence_id": "syn_regulatory_risk_z",
+                  "metric": "regulatory_risk_z",
+                  "age_minutes": 30,
+                  "limit_minutes": 180,
+                  "passed": true
+                },
+                {
+                  "evidence_id": "syn_social_sentiment_z",
+                  "metric": "social_sentiment_z",
+                  "age_minutes": 30,
+                  "limit_minutes": 180,
+                  "passed": true
+                }
+              ]
+            },
+            "limit": "TRANSFORM_POLICY_OR_CONTEXT_FALLBACK"
+          },
+          {
+            "rule_id": "NO_FUTURE_EVIDENCE",
+            "passed": true,
+            "observed": 0,
+            "limit": 0
+          },
+          {
+            "rule_id": "FEATURE_COVERAGE",
+            "passed": true,
+            "observed": {
+              "coverage": 1,
+              "supplied_feature_count": 8,
+              "expected_feature_count": 8,
+              "missing_features": []
+            },
+            "limit": 0.5
+          },
+          {
+            "rule_id": "SOURCE_HEALTH",
+            "passed": true,
+            "observed": "NOT_APPLICABLE",
+            "limit": "NOT_APPLICABLE"
+          },
+          {
+            "rule_id": "REFERENCE_PRICE_BOUND",
+            "passed": true,
+            "observed": "LEGACY_UNBOUND_CONTEXT",
+            "limit": "NOT_APPLICABLE"
+          },
+          {
+            "rule_id": "MODEL_CONFIDENCE",
+            "passed": true,
+            "observed": 0.937082,
+            "limit": 0.58
+          },
+          {
+            "rule_id": "ORDER_NOTIONAL_LIMIT",
+            "passed": false,
+            "observed": 1500,
+            "limit": 1000
+          },
+          {
+            "rule_id": "PAPER_POSITION_LIMIT",
+            "passed": true,
+            "observed": 0.015,
+            "limit": 0.02
+          },
+          {
+            "rule_id": "PAPER_SELL_INVENTORY",
+            "passed": true,
+            "observed": 0,
+            "limit": "NOT_APPLICABLE"
+          },
+          {
+            "rule_id": "DAILY_PAPER_ORDER_LIMIT",
+            "passed": true,
+            "observed": 1,
+            "limit": 12
+          }
+        ],
+        "normalized_context": {
+          "requested_execution_mode": "PAPER_SIMULATION",
+          "requested_notional_usd": 1500,
+          "reference_price_usd": 60000,
+          "reference_price_evidence_id": null,
+          "paper_portfolio": {
+            "equity_usd": 100000,
+            "current_btc": 0,
+            "daily_paper_orders": 1
+          },
+          "limits": {
+            "max_evidence_age_minutes": 180,
+            "min_feature_coverage": 0.5,
+            "min_candidate_probability": 0.58,
+            "max_order_notional_usd": 1000,
+            "max_position_pct_equity": 0.02,
+            "max_daily_paper_orders": 12
+          }
+        },
+        "proposed_paper_order": {
+          "symbol": "BTC-USD",
+          "side": "BUY",
+          "notional_usd": 1500,
+          "quantity_btc": 0.025,
+          "reference_price_usd": 60000
+        },
+        "live_execution": "FORBIDDEN"
+      },
+      "canonical_json": "{\"decision_id\":\"btc_dec_099feab304bd5a369bf3c24a\",\"payload\":{\"candidate_action\":\"BUY\",\"candidate_probability\":0.937082,\"enforcement_role\":\"DETERMINISTIC_FINAL_VETO\",\"failed_rule_ids\":[\"ORDER_NOTIONAL_LIMIT\"],\"final_action\":\"HOLD\",\"live_execution\":\"FORBIDDEN\",\"normalized_context\":{\"limits\":{\"max_daily_paper_orders\":12,\"max_evidence_age_minutes\":180,\"max_order_notional_usd\":1000,\"max_position_pct_equity\":0.02,\"min_candidate_probability\":0.58,\"min_feature_coverage\":0.5},\"paper_portfolio\":{\"current_btc\":0,\"daily_paper_orders\":1,\"equity_usd\":100000},\"reference_price_evidence_id\":null,\"reference_price_usd\":60000,\"requested_execution_mode\":\"PAPER_SIMULATION\",\"requested_notional_usd\":1500},\"proposed_paper_order\":{\"notional_usd\":1500,\"quantity_btc\":0.025,\"reference_price_usd\":60000,\"side\":\"BUY\",\"symbol\":\"BTC-USD\"},\"risk_policy_version\":\"btc-paper-risk@1.1.0\",\"rules\":[{\"limit\":\"PAPER_OR_PAPER_SIMULATION\",\"observed\":\"PAPER_SIMULATION\",\"passed\":true,\"rule_id\":\"PAPER_ONLY_MODE\"},{\"limit\":\"TRANSFORM_POLICY_OR_CONTEXT_FALLBACK\",\"observed\":{\"items\":[{\"age_minutes\":30,\"evidence_id\":\"syn_developer_activity_z\",\"limit_minutes\":180,\"metric\":\"developer_activity_z\",\"passed\":true},{\"age_minutes\":30,\"evidence_id\":\"syn_exchange_netflow_z\",\"limit_minutes\":180,\"metric\":\"exchange_netflow_z\",\"passed\":true},{\"age_minutes\":30,\"evidence_id\":\"syn_macro_liquidity_z\",\"limit_minutes\":180,\"metric\":\"macro_liquidity_z\",\"passed\":true},{\"age_minutes\":30,\"evidence_id\":\"syn_network_activity_z\",\"limit_minutes\":180,\"metric\":\"network_activity_z\",\"passed\":true},{\"age_minutes\":30,\"evidence_id\":\"syn_price_momentum_z\",\"limit_minutes\":180,\"metric\":\"price_momentum_z\",\"passed\":true},{\"age_minutes\":30,\"evidence_id\":\"syn_realized_cap_growth_z\",\"limit_minutes\":180,\"metric\":\"realized_cap_growth_z\",\"passed\":true},{\"age_minutes\":30,\"evidence_id\":\"syn_regulatory_risk_z\",\"limit_minutes\":180,\"metric\":\"regulatory_risk_z\",\"passed\":true},{\"age_minutes\":30,\"evidence_id\":\"syn_social_sentiment_z\",\"limit_minutes\":180,\"metric\":\"social_sentiment_z\",\"passed\":true}],\"stale_item_count\":0},\"passed\":true,\"rule_id\":\"EVIDENCE_FRESHNESS\"},{\"limit\":0,\"observed\":0,\"passed\":true,\"rule_id\":\"NO_FUTURE_EVIDENCE\"},{\"limit\":0.5,\"observed\":{\"coverage\":1,\"expected_feature_count\":8,\"missing_features\":[],\"supplied_feature_count\":8},\"passed\":true,\"rule_id\":\"FEATURE_COVERAGE\"},{\"limit\":\"NOT_APPLICABLE\",\"observed\":\"NOT_APPLICABLE\",\"passed\":true,\"rule_id\":\"SOURCE_HEALTH\"},{\"limit\":\"NOT_APPLICABLE\",\"observed\":\"LEGACY_UNBOUND_CONTEXT\",\"passed\":true,\"rule_id\":\"REFERENCE_PRICE_BOUND\"},{\"limit\":0.58,\"observed\":0.937082,\"passed\":true,\"rule_id\":\"MODEL_CONFIDENCE\"},{\"limit\":1000,\"observed\":1500,\"passed\":false,\"rule_id\":\"ORDER_NOTIONAL_LIMIT\"},{\"limit\":0.02,\"observed\":0.015,\"passed\":true,\"rule_id\":\"PAPER_POSITION_LIMIT\"},{\"limit\":\"NOT_APPLICABLE\",\"observed\":0,\"passed\":true,\"rule_id\":\"PAPER_SELL_INVENTORY\"},{\"limit\":12,\"observed\":1,\"passed\":true,\"rule_id\":\"DAILY_PAPER_ORDER_LIMIT\"}],\"status\":\"BLOCK\",\"vetoed\":true},\"previous_hash\":\"9196a3fbee877586216e035fb1580ecd68a17b27fbb914c064a591e6f5a4b6cf\",\"sequence\":3,\"stage\":\"risk\"}",
+      "hash": "1741a2f7e97a066611c2d44793cf216c0436ef373a59272d512de04154e7981c"
+    },
+    {
+      "sequence": 4,
+      "stage": "order",
+      "decision_id": "btc_dec_099feab304bd5a369bf3c24a",
+      "previous_hash": "1741a2f7e97a066611c2d44793cf216c0436ef373a59272d512de04154e7981c",
+      "payload": {
+        "execution_mode": "PAPER_SIMULATION_ONLY",
+        "external_route": "DISABLED",
+        "real_funds": false,
+        "status": "NOT_CREATED",
+        "reason": "RISK_VETO",
+        "paper_order": null
+      },
+      "canonical_json": "{\"decision_id\":\"btc_dec_099feab304bd5a369bf3c24a\",\"payload\":{\"execution_mode\":\"PAPER_SIMULATION_ONLY\",\"external_route\":\"DISABLED\",\"paper_order\":null,\"real_funds\":false,\"reason\":\"RISK_VETO\",\"status\":\"NOT_CREATED\"},\"previous_hash\":\"1741a2f7e97a066611c2d44793cf216c0436ef373a59272d512de04154e7981c\",\"sequence\":4,\"stage\":\"order\"}",
+      "hash": "44d3b9d02cb7fd611f9ff64f292f02fb19bd2a70c89a6ad16fe0143e54a363d2"
+    }
+  ],
+  "signature": {
+    "algorithm": "Ed25519",
+    "key_scope": "EPHEMERAL_RUNTIME_DEMO",
+    "key_fingerprint": "fe40e7a1825a106275230ccb50699bfbd5c4866b0c2cc2eea28bcca62cb64056",
+    "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEA7BUvSSagxWagi8SWbMajYBMXzoewvMZYEPoAgmr/Zug=\n-----END PUBLIC KEY-----\n",
+    "manifest": {
+      "manifest_schema_version": "flux-signature-manifest@1.0.0",
+      "artifact_schema_version": "flux-verifiable-btc-decision@1.0.0",
+      "artifact_hash": "0d3bd6209730d5039481c582089aae067f7a437666756985ed0cf6bbcf4d47ef",
+      "decision_id": "btc_dec_099feab304bd5a369bf3c24a",
+      "research_id": "btc_res_51d5a4aa56d632dae2a7e831",
+      "asset": "BTC",
+      "scenario_id": "risk-limit",
+      "as_of": "2026-09-01T04:00:00.000Z",
+      "data_classification": "SYNTHETIC_DEMO",
+      "model_version": "btc-multinomial-logit@1.0.0",
+      "candidate_action": "BUY",
+      "final_action": "HOLD",
+      "risk_status": "BLOCK",
+      "order_status": "NOT_CREATED",
+      "chain_head": "44d3b9d02cb7fd611f9ff64f292f02fb19bd2a70c89a6ad16fe0143e54a363d2",
+      "step_hashes": [
+        {
+          "sequence": 1,
+          "stage": "evidence",
+          "hash": "7069bbb0d8e7d781b346ef051fe67f3bd20c689a9b0cb6890333a2215f8a5a1e"
+        },
+        {
+          "sequence": 2,
+          "stage": "model",
+          "hash": "9196a3fbee877586216e035fb1580ecd68a17b27fbb914c064a591e6f5a4b6cf"
+        },
+        {
+          "sequence": 3,
+          "stage": "risk",
+          "hash": "1741a2f7e97a066611c2d44793cf216c0436ef373a59272d512de04154e7981c"
+        },
+        {
+          "sequence": 4,
+          "stage": "order",
+          "hash": "44d3b9d02cb7fd611f9ff64f292f02fb19bd2a70c89a6ad16fe0143e54a363d2"
+        }
+      ],
+      "signed_at": "2026-09-05T19:14:28.437Z",
+      "signer_key_fingerprint": "fe40e7a1825a106275230ccb50699bfbd5c4866b0c2cc2eea28bcca62cb64056"
+    },
+    "canonical_manifest": "{\"artifact_hash\":\"0d3bd6209730d5039481c582089aae067f7a437666756985ed0cf6bbcf4d47ef\",\"artifact_schema_version\":\"flux-verifiable-btc-decision@1.0.0\",\"as_of\":\"2026-09-01T04:00:00.000Z\",\"asset\":\"BTC\",\"candidate_action\":\"BUY\",\"chain_head\":\"44d3b9d02cb7fd611f9ff64f292f02fb19bd2a70c89a6ad16fe0143e54a363d2\",\"data_classification\":\"SYNTHETIC_DEMO\",\"decision_id\":\"btc_dec_099feab304bd5a369bf3c24a\",\"final_action\":\"HOLD\",\"manifest_schema_version\":\"flux-signature-manifest@1.0.0\",\"model_version\":\"btc-multinomial-logit@1.0.0\",\"order_status\":\"NOT_CREATED\",\"research_id\":\"btc_res_51d5a4aa56d632dae2a7e831\",\"risk_status\":\"BLOCK\",\"scenario_id\":\"risk-limit\",\"signed_at\":\"2026-09-05T19:14:28.437Z\",\"signer_key_fingerprint\":\"fe40e7a1825a106275230ccb50699bfbd5c4866b0c2cc2eea28bcca62cb64056\",\"step_hashes\":[{\"hash\":\"7069bbb0d8e7d781b346ef051fe67f3bd20c689a9b0cb6890333a2215f8a5a1e\",\"sequence\":1,\"stage\":\"evidence\"},{\"hash\":\"9196a3fbee877586216e035fb1580ecd68a17b27fbb914c064a591e6f5a4b6cf\",\"sequence\":2,\"stage\":\"model\"},{\"hash\":\"1741a2f7e97a066611c2d44793cf216c0436ef373a59272d512de04154e7981c\",\"sequence\":3,\"stage\":\"risk\"},{\"hash\":\"44d3b9d02cb7fd611f9ff64f292f02fb19bd2a70c89a6ad16fe0143e54a363d2\",\"sequence\":4,\"stage\":\"order\"}]}",
+    "signature_base64": "kmOJbjHVloGtRscslb32+oxZlPiBvYewIlracz7TjZiiesXSFBd0mD6DcbUBzUsPBP4T+gItVMgc12lWAdckAw=="
+  }
+}

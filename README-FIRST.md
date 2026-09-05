@@ -1,5 +1,7 @@
 # Flux Evidence Lab 队友现场包
 
+> **入口边界：** 本页是完整 Windows 便携 handoff 的现场说明，不是普通 GitHub 源码 checkout 的启动说明。当前源码 checkout 请先阅读根目录 [`README.md`](README.md)，再在 `app/` 执行 Node.js Quick Start；只有拿到包含匹配 `runtime/`、`manifest.sha256`、`tools/*.ps1` 和线下物料的完整便携包时，才运行本页的 `VERIFY-FILES.cmd`、`START-FLUX.cmd` 和 `OPEN-MEDIA-KIT.cmd`。
+
 先完整解压 ZIP，不要在压缩包预览窗口内直接运行。
 
 ## 现场 30 秒启动

@@ -12,6 +12,10 @@ logs/
 *.log
 .cache/
 .tmp/
+tmp/
+temp/
+coverage/
+.handoff-staging-*/
 
 # Secrets / local environment
 .env

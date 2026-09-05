@@ -1,0 +1,19 @@
+{
+  "package": "Flux-Evidence-Lab-Team-Handoff",
+  "generated_at_utc": "2026-09-04T02:16:17.6178666Z",
+  "source_portable_zip": "Flux-Evidence-Lab-Portable-Windows-x64.zip",
+  "source_portable_zip_sha256": "dcb1cabf546c3aad160b14ea03a4737326bf6665e8e446e216c22550174d5a54",
+  "execution_mode": "PAPER_ONLY",
+  "external_order_route": "DISABLED",
+  "user_requested_exclusions": [
+    "promo/modular-3d/exports",
+    "promo/modular-3d/raw",
+    "promo/modular-3d editable HTML/CSS"
+  ],
+  "handoff_entrypoints": [
+    "README-FIRST.md",
+    "AI-HANDOFF.md",
+    "PROJECT-CONTEXT.json",
+    "PROMPT-FOR-TEAMMATE-AI.txt"
+  ]
+}

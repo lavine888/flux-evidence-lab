@@ -1,0 +1,25 @@
+# Dependencies / generated runtime
+node_modules/
+runtime/node.exe
+
+# Generated competition media bundle
+promo/offline-kit/
+
+# Runtime output and local state
+output/
+dist/
+logs/
+*.log
+.cache/
+.tmp/
+
+# Secrets / local environment
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

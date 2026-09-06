@@ -1,12 +1,12 @@
 (async function bootstrap() {
   'use strict';
 
-  const [{ createServer }, fs, path, { pathToFileURL }] = await Promise.all([
-    import('node:http'),
-    import('node:fs/promises'),
-    import('node:path'),
-    import('node:url')
-  ]);
+  // Keep the captured Node server compatible with Vercel's CommonJS build
+  // while retaining dynamic imports for the project's ESM runtime modules.
+  const { createServer } = require('node:http');
+  const fs = require('node:fs/promises');
+  const path = require('node:path');
+  const { pathToFileURL } = require('node:url');
 
   const SCRIPT_DIR = typeof __dirname === 'string'
     ? __dirname

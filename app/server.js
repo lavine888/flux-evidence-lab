@@ -13,7 +13,7 @@
     : path.dirname(path.resolve(process.argv[1] || '.'));
   const PUBLIC_DIR = path.join(SCRIPT_DIR, 'public');
   const PORT = parsePort(process.env.FLUX_AGENT_PORT || process.env.PORT, 8810);
-  const HOST = '127.0.0.1';
+  const HOST = process.env.HOST || '127.0.0.1';
   const JSON_BODY_LIMIT = 1_000_000;
   const LOCAL_RESEARCH_RESPONSE_LIMIT = 2_000_000;
   const REPORT_LIMIT = 128;
@@ -629,7 +629,7 @@
   });
 
   server.listen(PORT, HOST, () => {
-    console.log(`Flux verifiable BTC agent: http://localhost:${PORT}`);
+    console.log(`Flux verifiable BTC agent: http://${HOST}:${PORT}`);
     console.log('Paper-only competition console; no live order route is present.');
   });
 

@@ -99,12 +99,11 @@
 
   function setSecurityHeaders(response, api = false) {
     response.setHeader('X-Content-Type-Options', 'nosniff');
-    response.setHeader('X-Frame-Options', 'DENY');
     response.setHeader('Referrer-Policy', 'no-referrer');
     response.setHeader('Cross-Origin-Resource-Policy', 'same-origin');
     response.setHeader(
       'Content-Security-Policy',
-      "default-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; img-src 'self' data:; connect-src 'self'; script-src 'self'; style-src 'self'"
+      "default-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'self' https://modelscope.cn https://www.modelscope.cn; img-src 'self' data:; connect-src 'self'; script-src 'self'; style-src 'self'"
     );
     if (api) response.setHeader('Cache-Control', 'no-store');
   }

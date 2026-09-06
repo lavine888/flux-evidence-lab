@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flux Evidence Lab · 3 分钟录屏方案</title>
+  <style>
+    :root{color-scheme:dark;--bg:#101310;--panel:#191e19;--line:#343e33;--text:#eff3e9;--muted:#adb7a7;--lime:#c3f879;--orange:#efbe80}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.75 system-ui,"Microsoft YaHei",sans-serif}a{color:var(--lime);text-underline-offset:4px}button,.button{font:inherit;cursor:pointer;border:1px solid var(--line);border-radius:9px;padding:10px 17px;background:var(--panel);color:var(--text);text-decoration:none;display:inline-block}button:hover,.button:hover{border-color:var(--lime)}button:focus-visible,a:focus-visible,textarea:focus-visible{outline:3px solid var(--lime);outline-offset:4px}.primary{background:var(--lime);color:#172110;border-color:var(--lime)}.wrap{max-width:1160px;margin:auto;padding:0 28px}header{padding:66px 0 34px}.eyebrow{font-size:12px;letter-spacing:3px;color:var(--lime);font-weight:700}h1{font-size:clamp(32px,5vw,58px);letter-spacing:-2px;line-height:1.18;margin:18px 0}h2{font-size:25px;line-height:1.4;margin:0 0 14px}h3{font-size:17px;margin:0 0 9px}.intro{max-width:780px;font-size:18px;color:var(--muted)}.actions{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0}.meta{display:flex;flex-wrap:wrap;gap:10px}.tag{border:1px solid var(--line);padding:4px 11px;border-radius:20px;font-size:12px;color:var(--muted)}nav{position:sticky;top:0;z-index:2;background:#101310f5;border-block:1px solid var(--line)}nav .wrap{display:flex;gap:24px;overflow-x:auto;padding-block:14px}nav a{white-space:nowrap;font-size:14px;text-decoration:none;color:var(--muted)}section{margin:36px 0}.notice{background:#23261a;border-left:3px solid var(--lime);padding:18px 22px;border-radius:0 10px 10px 0}.notice p{margin:0}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px}.panel p{margin:8px 0 0}.number{font:36px/1 monospace;color:var(--lime);margin-bottom:16px}.step{display:grid;grid-template-columns:140px 1fr;border:1px solid var(--line);border-radius:14px;background:var(--panel);margin:18px 0;overflow:hidden;break-inside:avoid}.time{padding:25px 20px;border-right:1px solid var(--line);color:var(--lime);font-family:monospace;font-size:18px}.time small{display:block;color:var(--muted);font:12px/1.5 system-ui;margin-top:8px}.body{padding:24px 28px}.columns{display:grid;grid-template-columns:1fr 1.1fr;gap:28px}.label{font-size:11px;letter-spacing:2px;color:var(--muted);margin-bottom:10px}.body ol{padding-left:22px;margin:0}.body li{margin:7px 0}blockquote{margin:0;padding:18px 20px;background:#101510;border-left:2px solid var(--lime);font-size:17px;border-radius:0 8px 8px 0}.proof{border-top:1px solid var(--line);margin-top:20px;padding-top:13px;font-size:14px;color:var(--orange)}code{font-family:ui-monospace,Consolas,monospace;font-size:.88em;overflow-wrap:anywhere}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:14px 12px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--lime);font-weight:600}td:first-child{min-width:160px}.checks{display:grid;grid-template-columns:1fr 1fr;gap:12px 24px}.checks label{display:flex;gap:10px;align-items:flex-start}.checks input{margin-top:8px;accent-color:var(--lime);width:17px;height:17px;flex-shrink:0}textarea{width:100%;min-height:400px;resize:vertical;background:#101510;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:20px;font:14px/1.8 ui-monospace,Consolas,"Microsoft YaHei",monospace}.status{color:var(--lime);font-size:14px;min-height:26px}.foot{padding:30px 0 50px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
+    @media(max-width:760px){.wrap{padding-inline:18px}header{padding-top:38px}.grid,.columns,.checks{grid-template-columns:1fr}.step{grid-template-columns:1fr}.time{border-right:0;border-bottom:1px solid var(--line);padding:12px 20px}.time small{display:inline;margin-left:12px}.body{padding:20px}nav .wrap{gap:18px}h1{letter-spacing:-1px}}
+    @media print{ :root{color-scheme:light;--bg:white;--panel:white;--line:#ccc;--text:#111;--muted:#444;--lime:#345b1c;--orange:#704711}body{font-size:11pt}nav,.actions,.status{display:none}header{padding:15px 0}h1{font-size:30px}.wrap{max-width:none;padding:0}blockquote,.notice,textarea{background:white;color:#111}.columns{grid-template-columns:1fr 1fr}textarea{min-height:650px;font-size:10pt}.step{break-inside:avoid}.foot{padding:15px 0}}
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <div class="eyebrow">FLUX EVIDENCE LAB / RECORDING PLAYBOOK</div>
+    <h1>让评委看懂<br>一条可验证的金融决策。</h1>
+    <p class="intro">3 分钟连续录屏方案。用真实运行的离线合成场景，依次展示证据、模型、风险否决与篡改检测；交给 Luna 后按这份路线准备录制。</p>
+    <div class="meta"><span class="tag">方案版本 · 2026-09-06</span><span class="tag">目标时长 · 180 秒以内</span><span class="tag">视频状态 · 尚未录制 / TBD</span><span class="tag">执行边界 · Paper-only</span></div>
+    <div class="actions"><a class="button primary" href="http://localhost:8810/demo-recording.html" target="_blank" rel="noopener">打开可录屏 Demo ↗</a><a class="button" href="http://localhost:8810/" target="_blank" rel="noopener">打开实际控制台 ↗</a><a class="button" href="#luna">复制 Luna 执行指令</a><button id="printButton" type="button">打印 / 保存 PDF</button></div>
+  </header>
+  <nav aria-label="方案导航"><div class="wrap"><a href="#prepare">录制准备</a><a href="#story">六段镜头</a><a href="#explain">页面速查</a><a href="#acceptance">验收清单</a><a href="#luna">交给 Luna</a></div></nav>
+  <main class="wrap">
+    <section class="notice"><p>本页是录屏操作方案，画面中的 BUY、HOLD、概率、签名和验证结果均需来自实际项目运行。录制项目窗口即可；方案放在另一个窗口供演示人参考。</p></section>
+    <section id="prepare">
+      <h2>先把录制起点准备好</h2>
+      <div class="grid">
+        <article class="panel"><div class="number">01</div><h3>准备窗口</h3><p>打开本地项目，建议 1440 × 900 或更宽、100% 缩放。只录项目窗口，关闭通知。方案页留在录制区域之外。</p></article>
+        <article class="panel"><div class="number">02</div><h3>准备场景</h3><p>刷新后手动选择“离线建设性”。选择场景只会改说明；点击“运行决策”才生成报告。正式录制从点击之前开始。</p></article>
+        <article class="panel"><div class="number">03</div><h3>准备一次彩排</h3><p>先跑通建设性、超限、原件验证与篡改测试。按下面时段排练，建议 2:50 左右结束，预留操作缓冲。</p></article>
+      </div>
+      <p class="muted">公网场景曾出现 fetch failed，本方案不依赖它。离线输入明确标记 SYNTHETIC_DEMO；公开价格为空、Public 数量为 0 都符合这个场景。页内勾选仅用于本次自查，刷新后重置。</p>
+    </section>
+    <section id="story">
+      <h2>六段镜头 · 一条连续运行记录</h2>
+      <article class="step"><div class="time">0:00–0:30<small>01 / 项目与问题</small></div><div class="body"><h3>交代谁在用、为什么需要它</h3><div class="columns"><div><div class="label">画面与操作</div><ol><li>停留在“决策总览”顶部。</li><li>鼠标指向项目名与 PAPER ONLY。</li><li>让“离线建设性”选项保持可见。</li></ol></div><div><div class="label">可直接朗读</div><blockquote>这是 Flux Evidence Lab，面向数字资产研究和风险复核人员。它记录一条金融决策用了哪些证据、模型提出了什么、风控是否允许，以及报告能否重新验证。当前只做本地 Paper 模拟。</blockquote></div></div><div class="proof">画面要点：项目名称、场景、Paper-only 边界。</div></div></article>
+      <article class="step"><div class="time">0:30–1:05<small>02 / 证据与模型</small></div><div class="body"><h3>现场运行，解释候选动作从哪来</h3><div class="columns"><div><div class="label">画面与操作</div><ol><li>点击“运行决策”，等报告生成。</li><li>点左侧“证据账本”，展示来源、分类与 As-of。</li><li>点“模型与风控”，展示候选动作、概率和因子贡献。</li></ol></div><div><div class="label">可直接朗读</div><blockquote>这里使用八个固定的合成证据，方便离线复现。模型根据这些输入计算 BUY、HOLD、SELL 三类概率，并展示各因子的贡献。页面上的候选动作是本次程序算出的结果，概率尚未做现实市场校准。</blockquote></div></div><div class="proof">预期：8 / 8 特征、候选 BUY。以现场结果为准；BUY 概率不能讲成盈利概率。</div></div></article>
+      <article class="step"><div class="time">1:05–1:35<small>03 / 风险否决</small></div><div class="body"><h3>演示模型有提议权，风控有否决权</h3><div class="columns"><div><div class="label">画面与操作</div><ol><li>点“决策总览”，选“超限阻断”，再点“运行决策”。</li><li>展示顶部最终 HOLD 和订单未创建。</li><li>点“模型与风控”，指向 BUY 与“模拟订单名义金额”失败项。</li></ol></div><div><div class="label">可直接朗读</div><blockquote>切换到超限场景后，模型仍可能提出 BUY，但请求金额超过了风控上限。这里可以看到规则否决，最终动作变为 HOLD，订单没有创建。风控的否决由程序直接执行。</blockquote></div></div><div class="proof">预期：候选 BUY → ORDER_NOTIONAL_LIMIT 阻断 → 最终 HOLD → NOT_CREATED。</div></div></article>
+      <article class="step"><div class="time">1:35–2:05<small>04 / 决策记录</small></div><div class="body"><h3>回到建设性场景，展示完整审计链</h3><div class="columns"><div><div class="label">画面与操作</div><ol><li>回到顶部，重新选择“离线建设性”并点击“运行决策”。</li><li>展示 decision_id、research_id 与模拟订单状态。</li><li>点“完整性验证”，停在四步哈希链。</li></ol></div><div><div class="label">可直接朗读</div><blockquote>现在重新运行建设性场景，得到本地模拟结果。研究 ID 关联证据快照，决策 ID 关联整条决策记录。证据、模型、风险和订单四步通过哈希相连，便于事后检查。</blockquote></div></div><div class="proof">必须重新运行：当前页面没有历史报告切换器。六阶段执行图与四步哈希记录是不同层次的展示。</div></div></article>
+      <article class="step"><div class="time">2:05–2:40<small>05 / 验证与篡改</small></div><div class="body"><h3>让原件通过，让篡改被检出</h3><div class="columns"><div><div class="label">画面与操作</div><ol><li>滚动到底部工具栏，点击“验证原件”。</li><li>回看签名区域的实际检查结果。</li><li>点击“篡改副本测试”，回看“篡改已检出”和错误码。</li></ol></div><div><div class="label">可直接朗读</div><blockquote>点击验证原件，验证入口重新检查哈希链、确定性重放和签名。再测试一个在内存中修改的副本，验证器将它拒绝，原件保持不变。这个结果支持报告的完整性检查，不保证输入真实或模型预测正确。</blockquote></div></div><div class="proof">按钮实际名称是“验证原件”。篡改被成功检出时提示可以是绿色；看“副本被拒绝”的文字，不要求整个原件状态变红。</div></div></article>
+      <article class="step"><div class="time">2:40–3:00<small>06 / 边界与收束</small></div><div class="body"><h3>留下一个准确、可记住的价值点</h3><div class="columns"><div><div class="label">画面与操作</div><ol><li>点“边界与限制”，展示模型限制和自动 / 人工边界。</li><li>回到顶部项目名与 PAPER ONLY。</li><li>结束录制，核对实际视频时长。</li></ol></div><div><div class="label">可直接朗读</div><blockquote>模型负责提议，风控负责约束，Paper 负责模拟，验证器负责复核。Flux Evidence Lab 让 AI 辅助金融决策的过程可以追溯、重放和检查。</blockquote></div></div><div class="proof">3:00 是方案上限；实际耗时与赛事最终时长要求需以录制文件和官方版本核对。</div></div></article>
+    </section>
+    <section id="explain" class="panel"><h2>页面速查 · 遇到这些数字怎么讲</h2><div class="table-wrap"><table><thead><tr><th>页面字段</th><th>准确解释</th><th>容易误读的地方</th></tr></thead><tbody>
+      <tr><td>BTC 公开价格：--</td><td>离线场景没有即时公开报价。</td><td>不代表离线证据缺失；模拟参考价也不等于实时市场价。</td></tr>
+      <tr><td>8 / 8 · 0 Public</td><td>八个模型输入齐全；本场景使用合成证据。</td><td>不能表述为八个公网数据源都在线。</td></tr>
+      <tr><td>As-of / 证据年龄</td><td>按照场景的固定参考时间检查证据年龄。</td><td>离线日期不是今天的采集时间，时效通过不意味着今日行情新鲜。</td></tr>
+      <tr><td>候选概率 / 因子贡献</td><td>演示模型的分类概率，以及各输入对类别得分的贡献。</td><td>不是胜率、收益率或市场因果证明。</td></tr>
+      <tr><td>模拟已接受</td><td>生成了一条本地 Paper 模拟订单记录。</td><td>没有真实成交，也没有收益回测结论。</td></tr>
+      <tr><td>签名 / 验证通过</td><td>报告通过重放和完整性检查；使用临时运行时密钥。</td><td>验证入口与主流程共享部分核心逻辑；不是独立重写的第二套实现，也没有 TEE / ZKP。</td></tr>
+      <tr><td>篡改已检出</td><td>修改后的内存副本被拒绝，原件没有改动。</td><td>成功检出可以显示绿色；原件仍通过是正常行为。</td></tr>
+    </tbody></table></div></section>
+    <section id="acceptance" class="panel"><h2>录完后检查这些可见证据</h2><div class="checks">
+      <label><input type="checkbox">连续实际运行，视频时长不超过计划上限。</label>
+      <label><input type="checkbox">开头说明离线合成证据和 Paper-only。</label>
+      <label><input type="checkbox">证据来源、时间、模型版本和候选动作清晰可读。</label>
+      <label><input type="checkbox">出现风险规则失败、最终 HOLD、订单未创建。</label>
+      <label><input type="checkbox">原件验证通过和篡改副本被拒绝均实际出现。</label>
+      <label><input type="checkbox">下载实际报告，并记录视频路径、时长和录制日期。</label>
+    </div><p class="muted">意外出现 HOLD 就按结果说明并排查；不得改数据强求 BUY。若原件验证失败或篡改副本通过，先停止录制并保留错误。团队、赛期新增比例、许可与最终提交等人工项仍按实际确认状态记录。</p></section>
+    <section id="luna" class="panel"><div class="eyebrow">NEXT / EXECUTION HANDOFF</div><h2>交给 Luna 的执行指令</h2><p class="muted">切换模型后，把下面这段发给它。此处只提供指令，不会自动切换模型或启动录制。</p>
+      <textarea id="handoff" readonly aria-label="Luna 执行指令">请按 D:\Codex-Workspace\Aixhackthon\docs\DEMO_RECORDING_PLAN.html 准备并协助我完成 Flux Evidence Lab 的 3 分钟连续真实运行录屏。
+
+目标：以现有项目实际运行画面展示离线证据 → 模型候选 → 风控否决 → Paper 结果 → 原件验证 → 篡改检出。我来做录屏；你负责核对运行环境、指导点击和讲解、处理阻塞录制的实际问题。
+
+先读取这份 HTML 方案，以及 docs/DEMO_SCRIPT_3MIN.md、当前 app/public/index.html 和 app/public/app.js。核对真实仓库根目录、分支、远程和已有修改。保留现有改动；这个任务不要求自动发布、创建 PR 或执行赛事提交。
+
+优先复用 http://localhost:8810 的现有服务；若未运行，从 app 目录执行 npm start。准备“离线建设性”，提醒我点击“运行决策”才会生成报告。不得把方案页里的预期值或历史样例代替现场结果。
+
+按 HTML 六段时间线彩排：
+0:00–0:30 项目与 Paper-only；
+0:30–1:05 离线建设性：实际运行、证据来源和时间、模型概率与贡献；
+1:05–1:35 超限阻断：重新运行，展示 BUY 候选、金额规则失败、最终 HOLD、未创建订单；
+1:35–2:05 重新选择离线建设性并运行，展示 IDs、Paper 结果、四步哈希链；
+2:05–2:40 点击“验证原件”和“篡改副本测试”，展示真实结果与错误码；
+2:40–3:00 边界限制与项目总结。
+
+注意：当前按钮叫“验证原件”；页面没有历史报告切换器，切回建设性要重新运行。篡改成功检出时可以显示绿色，原件保持通过。离线场景公开价格为空、Public 为 0 是正常的。合成数据和固定场景时间要明确说明。模型使用演示参数，分类概率不是盈利概率；共享核心逻辑的验证入口不等于完全独立重写的验证实现。
+
+公网来源此前不可用，主线用离线场景；不得用合成值或截图伪装实时成功。如确有阻塞录屏的问题，先复现后做最小修复并针对性验证；不要扩展交易功能、重写模型或改风险阈值来追求预设结果。原件验签失败或篡改未被拒绝时停止录制并处理原因。
+
+完成后帮我记录真实视频文件路径、实际时长、日期和对应源码提交，保存实际下载的审计报告，核对画面验收清单。没有视频文件就继续标记“未录制 / TBD”，不要编造视频链接或把彩排当正式完成。团队角色、70% 赛期新增、条款、许可证和赛事最终提交等人工确认项保持真实状态。</textarea>
+      <div class="actions"><button id="copyButton" class="primary" type="button">复制整段执行指令</button></div><p id="copyStatus" class="status" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+  <footer class="wrap foot">方案依据：现有控制台字段、离线场景定义与 <a href="DEMO_SCRIPT_3MIN.md">录屏脚本</a>。本文件可离线打开，不请求数据接口；所有演示结果须在实际项目中产生。</footer>
+  <script>
+    'use strict';
+    document.getElementById('printButton').addEventListener('click', () => window.print());
+    document.getElementById('copyButton').addEventListener('click', async () => {
+      const field = document.getElementById('handoff');
+      const status = document.getElementById('copyStatus');
+      try {
+        if (!navigator.clipboard || !navigator.clipboard.writeText) throw new Error('Clipboard unavailable');
+        await navigator.clipboard.writeText(field.value);
+        status.textContent = '已复制。切换到 Luna 后粘贴发送即可。';
+      } catch {
+        field.focus();
+        field.select();
+        status.textContent = '浏览器限制自动复制，已选中全文。请按 Ctrl+C（Mac：⌘C）。';
+      }
+    });
+  </script>
+</body>
+</html>

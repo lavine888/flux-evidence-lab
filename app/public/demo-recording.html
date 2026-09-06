@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Flux Evidence Lab 3 分钟连续演示导演页">
+  <title>Flux Evidence Lab · 录屏演示</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0a0d0b;
+      --panel: #111713;
+      --panel-2: #172019;
+      --line: #2c3a2e;
+      --line-bright: #506850;
+      --text: #f2f6ed;
+      --muted: #a6b1a2;
+      --dim: #6d786b;
+      --lime: #baff47;
+      --lime-soft: #d9ff96;
+      --orange: #ffc56f;
+      --red: #ff8177;
+      --blue: #86c9ff;
+      --shadow: 0 20px 80px rgba(0, 0, 0, .34);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      background:
+        radial-gradient(circle at 82% -10%, rgba(186, 255, 71, .08), transparent 34rem),
+        radial-gradient(circle at -8% 90%, rgba(134, 201, 255, .05), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      font: 15px/1.65 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+    }
+    button, a { font: inherit; }
+    button { cursor: pointer; }
+    button:focus-visible, a:focus-visible { outline: 3px solid var(--lime); outline-offset: 4px; }
+    .shell { width: min(1440px, calc(100% - 48px)); margin: 0 auto; }
+    .topbar {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+    .brand { display: flex; align-items: center; gap: 13px; }
+    .brand-mark {
+      width: 38px; height: 38px; display: grid; place-items: center;
+      border-radius: 10px; background: var(--lime); color: #14200d;
+      font-weight: 900; font-size: 23px; box-shadow: 0 0 26px rgba(186, 255, 71, .22);
+    }
+    .brand strong { display: block; letter-spacing: .1em; font-size: 14px; }
+    .brand small { display: block; color: var(--muted); font-size: 11px; letter-spacing: .09em; text-transform: uppercase; }
+    .top-actions { display: flex; align-items: center; gap: 10px; }
+    .mode-badge, .runtime {
+      border: 1px solid var(--line-bright); border-radius: 999px; padding: 5px 11px;
+      font-size: 11px; letter-spacing: .08em; white-space: nowrap;
+    }
+    .mode-badge { color: var(--lime); }
+    .runtime { color: var(--muted); }
+    .runtime.ready { color: var(--lime-soft); }
+    .dot { display: inline-block; width: 7px; height: 7px; margin-right: 6px; border-radius: 50%; background: var(--orange); }
+    .runtime.ready .dot { background: var(--lime); box-shadow: 0 0 10px var(--lime); }
+    .intro { padding: 46px 0 28px; display: flex; align-items: end; justify-content: space-between; gap: 30px; }
+    .eyebrow { margin: 0 0 11px; color: var(--lime); font-size: 11px; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { max-width: 760px; margin-bottom: 13px; font-size: clamp(30px, 4.3vw, 58px); letter-spacing: -.045em; line-height: 1.08; }
+    .intro-copy { max-width: 680px; margin-bottom: 0; color: var(--muted); font-size: 17px; }
+    .intro-note { min-width: 240px; max-width: 290px; border-left: 2px solid var(--lime); padding-left: 16px; color: var(--muted); font-size: 13px; }
+    .intro-note strong { color: var(--text); display: block; margin-bottom: 3px; }
+    .layout { display: grid; grid-template-columns: 220px minmax(0, 1fr) 310px; gap: 16px; align-items: start; }
+    .rail, .stage, .live-panel { background: rgba(17, 23, 19, .9); border: 1px solid var(--line); box-shadow: var(--shadow); }
+    .rail { position: sticky; top: 16px; padding: 16px; border-radius: 14px; }
+    .rail-title { display: flex; justify-content: space-between; margin: 0 0 13px; color: var(--muted); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+    .progress { display: grid; gap: 6px; }
+    .stage-tab {
+      width: 100%; display: grid; grid-template-columns: 28px 1fr; gap: 9px; align-items: center;
+      padding: 10px; border: 1px solid transparent; border-radius: 9px; background: transparent; color: var(--muted); text-align: left;
+    }
+    .stage-tab:hover { border-color: var(--line-bright); color: var(--text); }
+    .stage-tab.active { border-color: rgba(186, 255, 71, .45); background: rgba(186, 255, 71, .08); color: var(--text); }
+    .stage-tab.done { color: var(--lime-soft); }
+    .stage-number { font: 12px/1 ui-monospace, SFMono-Regular, Consolas, monospace; color: var(--lime); }
+    .stage-tab span:last-child { font-size: 12px; line-height: 1.3; }
+    .rail-boundary { margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+    .rail-boundary strong { display: block; margin: 3px 0 6px; color: var(--lime); font-size: 20px; }
+    .stage { min-height: 680px; border-radius: 14px; overflow: hidden; }
+    .stage-head { display: flex; justify-content: space-between; align-items: start; gap: 20px; padding: 25px 28px 21px; border-bottom: 1px solid var(--line); }
+    .stage-time { color: var(--lime); font: 13px/1 ui-monospace, SFMono-Regular, Consolas, monospace; white-space: nowrap; }
+    .stage-head h2 { margin-bottom: 7px; font-size: 28px; letter-spacing: -.035em; line-height: 1.15; }
+    .stage-head p { margin-bottom: 0; color: var(--muted); }
+    .stage-body { padding: 27px 28px 31px; }
+    .script {
+      margin-bottom: 25px; padding: 16px 18px; border-left: 2px solid var(--lime);
+      background: #0d120e; color: var(--lime-soft); font-size: 16px; line-height: 1.7;
+    }
+    .script::before { content: "台词"; display: block; margin-bottom: 5px; color: var(--lime); font-size: 10px; font-weight: 800; letter-spacing: .17em; text-transform: uppercase; }
+    .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px 0; }
+    .fact { padding: 14px; border: 1px solid var(--line); border-radius: 9px; background: rgba(255,255,255,.015); }
+    .fact-label { display: block; margin-bottom: 5px; color: var(--muted); font-size: 11px; }
+    .fact-value { display: block; color: var(--text); font-size: 21px; font-weight: 700; line-height: 1.2; overflow-wrap: anywhere; }
+    .fact-value.good { color: var(--lime); }
+    .fact-value.warn { color: var(--orange); }
+    .fact-value.bad { color: var(--red); }
+    .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 25px 0; }
+    .flow-node { padding: 10px 13px; border: 1px solid var(--line-bright); border-radius: 8px; background: var(--panel-2); color: var(--lime-soft); font-size: 12px; }
+    .flow-arrow { color: var(--dim); }
+    .action-row { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 25px; }
+    .button {
+      border: 1px solid var(--line-bright); border-radius: 8px; padding: 10px 15px;
+      background: transparent; color: var(--text); text-decoration: none; font-size: 13px;
+    }
+    .button:hover { border-color: var(--lime); }
+    .button.primary { border-color: var(--lime); background: var(--lime); color: #15200d; font-weight: 750; }
+    .button.secondary { background: var(--panel-2); }
+    .button.danger { border-color: rgba(255,129,119,.65); color: #ffaaa3; }
+    .button:disabled { cursor: not-allowed; opacity: .45; }
+    .two-col { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(230px, .75fr); gap: 15px; }
+    .subpanel { min-width: 0; padding: 17px; border: 1px solid var(--line); border-radius: 11px; background: rgba(255,255,255,.015); }
+    .subpanel h3 { margin-bottom: 13px; font-size: 14px; }
+    .subpanel h3 small { float: right; color: var(--muted); font-size: 11px; font-weight: 400; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    th, td { padding: 9px 8px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { color: var(--muted); font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+    td { color: var(--text); }
+    td small { display: block; color: var(--muted); font-size: 10px; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere; }
+    .pill { display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 999px; font-size: 11px; }
+    .pill.good { background: rgba(186,255,71,.13); color: var(--lime); }
+    .pill.warn { background: rgba(255,197,111,.12); color: var(--orange); }
+    .pill.bad { background: rgba(255,129,119,.12); color: var(--red); }
+    .probability { display: grid; gap: 10px; }
+    .prob-row { display: grid; grid-template-columns: 44px 1fr 54px; align-items: center; gap: 8px; font-size: 12px; }
+    .prob-track { height: 8px; overflow: hidden; border-radius: 99px; background: #273229; }
+    .prob-track i { display: block; height: 100%; border-radius: inherit; background: var(--lime); }
+    .prob-row:nth-child(2) .prob-track i { background: var(--orange); }
+    .prob-row:nth-child(3) .prob-track i { background: var(--blue); }
+    .prob-row b { font: 11px/1 ui-monospace, SFMono-Regular, Consolas, monospace; text-align: right; }
+    .factor-list { display: grid; gap: 8px; }
+    .factor-row { display: grid; grid-template-columns: 92px 1fr 44px; align-items: center; gap: 8px; font-size: 11px; }
+    .factor-name { color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .factor-bar { height: 5px; display: block; border-radius: 99px; background: var(--lime); }
+    .factor-bar.negative { background: var(--blue); }
+    .factor-track { display: block; height: 5px; background: #273229; border-radius: 99px; overflow: hidden; }
+    .factor-value { font: 10px/1 ui-monospace, SFMono-Regular, Consolas, monospace; color: var(--lime); text-align: right; }
+    .factor-value.negative { color: var(--blue); }
+    .risk-list, .check-list, .boundary-list { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; }
+    .risk-item, .check-item { display: flex; align-items: start; justify-content: space-between; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 12px; }
+    .risk-copy strong { display: block; font-size: 12px; }
+    .risk-copy small { color: var(--muted); }
+    .check-mark { width: 19px; height: 19px; display: inline-grid; place-items: center; border-radius: 50%; flex: 0 0 auto; font-size: 11px; }
+    .check-mark.good { background: rgba(186,255,71,.16); color: var(--lime); }
+    .check-mark.bad { background: rgba(255,129,119,.16); color: var(--red); }
+    .risk-value { color: var(--muted); font: 10px/1.4 ui-monospace, SFMono-Regular, Consolas, monospace; text-align: right; }
+    .hash-list { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+    .hash-item { padding: 10px; border: 1px solid var(--line); border-radius: 8px; background: #0e130f; }
+    .hash-item header { min-height: auto; padding: 0 0 5px; border: 0; }
+    .hash-item header strong { font-size: 11px; text-transform: uppercase; }
+    .hash-item header small { color: var(--muted); font-size: 10px; }
+    .hash-item code { display: block; color: var(--lime-soft); font: 10px/1.45 ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere; }
+    .empty { padding: 30px 10px; border: 1px dashed var(--line-bright); border-radius: 9px; color: var(--muted); text-align: center; }
+    .empty strong { display: block; margin-bottom: 5px; color: var(--text); }
+    .tamper-box { margin-top: 14px; padding: 13px; border: 1px solid var(--line); border-radius: 8px; color: var(--muted); font-size: 12px; }
+    .tamper-box.good { border-color: rgba(186,255,71,.55); color: var(--lime-soft); }
+    .tamper-box.bad { border-color: rgba(255,129,119,.6); color: #ffaaa3; }
+    .live-panel { position: sticky; top: 16px; border-radius: 14px; overflow: hidden; }
+    .live-head { padding: 16px; border-bottom: 1px solid var(--line); }
+    .live-head h2 { margin: 0 0 3px; font-size: 15px; }
+    .live-head p { margin: 0; color: var(--muted); font-size: 11px; }
+    .live-body { padding: 14px; }
+    .live-scenario { margin-bottom: 12px; padding: 10px; border-radius: 8px; background: var(--panel-2); }
+    .live-scenario small { display: block; color: var(--muted); font-size: 10px; }
+    .live-scenario strong { display: block; margin-top: 2px; color: var(--lime); font-size: 13px; overflow-wrap: anywhere; }
+    .live-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .live-metric { padding: 10px; border: 1px solid var(--line); border-radius: 8px; }
+    .live-metric span { display: block; color: var(--muted); font-size: 10px; }
+    .live-metric b { display: block; margin-top: 3px; font-size: 14px; overflow-wrap: anywhere; }
+    .live-foot { padding: 12px 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 10px; }
+    .notice { margin-top: 16px; padding: 12px 14px; border: 1px solid rgba(255,197,111,.3); border-radius: 9px; color: var(--orange); font-size: 11px; }
+    .keyboard { margin-top: 11px; color: var(--dim); font-size: 10px; }
+    kbd { padding: 2px 5px; border: 1px solid var(--line-bright); border-radius: 4px; font: 10px ui-monospace, SFMono-Regular, Consolas, monospace; color: var(--muted); }
+    .footer { display: flex; justify-content: space-between; gap: 20px; padding: 28px 0 45px; color: var(--dim); font-size: 11px; }
+    .footer a { color: var(--lime); }
+    .hidden { display: none !important; }
+    @media (max-width: 1120px) { .layout { grid-template-columns: 185px minmax(0, 1fr); } .live-panel { position: static; grid-column: 2; } }
+    @media (max-width: 760px) { .shell { width: min(100% - 24px, 620px); } .topbar { align-items: start; padding: 15px 0; flex-direction: column; } .top-actions { flex-wrap: wrap; } .intro { display: block; padding-top: 29px; } .intro-note { margin-top: 20px; max-width: none; } .layout { display: block; } .rail, .live-panel { position: static; margin-bottom: 14px; } .progress { grid-template-columns: repeat(3, 1fr); } .stage-tab { grid-template-columns: 23px 1fr; } .stage-head, .stage-body { padding-inline: 18px; } .stage-head h2 { font-size: 23px; } .facts, .two-col { grid-template-columns: 1fr; } .footer { display: block; } .footer p { margin-bottom: 7px; } }
+    @media print { :root { color-scheme: light; --bg: #fff; --panel: #fff; --panel-2: #f3f6f1; --line: #cbd5c8; --line-bright: #9eae9a; --text: #111; --muted: #4d594a; --dim: #667164; --lime: #315e13; --lime-soft: #315e13; } body { font-size: 10pt; } .top-actions, .rail, .live-panel, .action-row, .keyboard { display: none !important; } .shell { width: 100%; } .intro { padding-block: 15px; } .stage { min-height: 0; box-shadow: none; } .stage-body { padding-bottom: 10px; } .footer { padding-bottom: 0; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">F</span>
+        <div><strong>FLUX EVIDENCE LAB</strong><small>Recording Director · Verifiable BTC Agent</small></div>
+      </div>
+      <div class="top-actions">
+        <span class="mode-badge">PAPER ONLY</span>
+        <span class="runtime" id="runtime"><i class="dot"></i><span id="runtimeText">正在检查本地服务</span></span>
+        <button class="button" data-action="toggle-script" type="button">隐藏台词</button>
+        <a class="button" href="/" target="_blank" rel="noreferrer">实际项目 ↗</a>
+      </div>
+    </header>
+
+    <section class="intro">
+      <div>
+        <p class="eyebrow">AIx Origin Summit · Flux Track · 3-minute run</p>
+        <h1>让评委看懂一条<br>可验证的金融决策。</h1>
+        <p class="intro-copy">这是录屏导演页。按钮会调用现有本地项目的实际运行与验签接口，按剧本推进六段镜头。录制前点击右上角“隐藏台词”，只保留清爽演示画面。</p>
+      </div>
+      <div class="intro-note"><strong>打开方式</strong>请通过 <code>http://localhost:8810/demo-recording.html</code> 打开，以便页面访问本地 API。离线场景标记为 <code>SYNTHETIC_DEMO</code>，不代表实时行情。</div>
+    </section>
+
+    <main class="layout">
+      <aside class="rail" aria-label="演示进度">
+        <p class="rail-title"><span>Run of show</span><span id="progressLabel">01 / 06</span></p>
+        <div class="progress" id="progress"></div>
+        <div class="rail-boundary"><span>执行边界</span><strong>Paper-only</strong><span>真实资金禁用<br>外部订单路由物理不可用</span></div>
+      </aside>
+
+      <section class="stage" aria-live="polite">
+        <header class="stage-head"><div><p class="eyebrow" id="stageKicker">01 / 问题与边界</p><h2 id="stageTitle">让金融 AI 的每一步都能被复核</h2><p id="stageDescription">先交代用户、问题和 Paper-only 责任边界。</p></div><span class="stage-time" id="stageTime">0:00–0:30</span></header>
+        <div class="stage-body" id="stageBody"></div>
+      </section>
+
+      <aside class="live-panel" aria-label="实时运行产物">
+        <header class="live-head"><h2>当前实际产物</h2><p>数据来自本地 API · 内存态 · 刷新即清空</p></header>
+        <div class="live-body">
+          <div class="live-scenario"><small>scenario / classification</small><strong id="liveScenario">尚未运行</strong></div>
+          <div class="live-metrics">
+            <div class="live-metric"><span>候选动作</span><b id="liveCandidate">--</b></div>
+            <div class="live-metric"><span>最终决策</span><b id="liveFinal">--</b></div>
+            <div class="live-metric"><span>订单状态</span><b id="liveOrder">--</b></div>
+            <div class="live-metric"><span>验签</span><b id="liveVerify">--</b></div>
+          </div>
+          <div class="notice">录制主线使用离线场景。公网来源失败时保留真实失败状态，不用合成值伪装在线成功。</div>
+        </div>
+        <div class="live-foot">键盘：<kbd>←</kbd><kbd>→</kbd> 切换镜头 · <kbd>1</kbd>–<kbd>6</kbd> 跳转 · <kbd>Space</kbd> 执行动作</div>
+      </aside>
+    </main>
+
+    <footer class="footer"><p>现场结果优先于方案中的预期值。不要把合成证据、分类概率或 Paper 订单说成实时行情、盈利概率或真实成交。</p><p><a href="/" target="_blank" rel="noreferrer">打开实际控制台</a> · <a href="/demo-recording.html">重新开始导演页</a></p></footer>
+  </div>
+
+  <script>
+    'use strict';
+
+    const STAGES = [
+      { time: '0:00–0:30', label: '问题与边界', title: '让金融 AI 的每一步都能被复核', description: '先交代用户、问题和 Paper-only 责任边界。' },
+      { time: '0:30–1:05', label: '证据与模型', title: 'Evidence → AI candidate', description: '运行离线建设性，展示证据账本、模型概率和因子贡献。' },
+      { time: '1:05–1:35', label: '确定性阻断', title: 'Model BUY → Risk BLOCK', description: '让模型提出 BUY，再让超限规则决定最终 HOLD。' },
+      { time: '1:35–2:05', label: 'Paper 审计记录', title: '一条决策，一条完整 Evidence Trail', description: '重新生成建设性结果，展示 ID、Paper 订单和哈希链。' },
+      { time: '2:05–2:40', label: '验证与篡改', title: 'Original PASS · Tampered FAIL', description: '验证原件，再让内存中的篡改副本被拒绝。' },
+      { time: '2:40–3:00', label: '边界与收束', title: 'Model proposes. Risk decides.', description: '用限制和责任边界结束，不把完整性说成正确性或收益。' }
+    ];
+    const FEATURE_LABELS = {
+      network_activity_z: '网络活跃度',
+      exchange_netflow_z: '交易所净流量',
+      realized_cap_growth_z: '已实现市值增长',
+      developer_activity_z: '开发活跃度',
+      social_sentiment_z: '市场情绪',
+      price_momentum_z: '价格动量',
+      macro_liquidity_z: '宏观流动性',
+      regulatory_risk_z: '监管风险'
+    };
+    const RISK_LABELS = {
+      PAPER_ONLY_MODE: '仅允许 Paper 模式',
+      EVIDENCE_FRESHNESS: '证据新鲜度',
+      NO_FUTURE_EVIDENCE: '禁止未来数据',
+      FEATURE_COVERAGE: '模型特征覆盖率',
+      SOURCE_HEALTH: '来源健康',
+      REFERENCE_PRICE_BOUND: '参考价格绑定',
+      MODEL_CONFIDENCE: '模型候选置信度',
+      ORDER_NOTIONAL_LIMIT: '模拟订单名义金额',
+      PAPER_POSITION_LIMIT: 'Paper 仓位上限',
+      PAPER_SELL_INVENTORY: 'Paper 卖出库存',
+      DAILY_PAPER_ORDER_LIMIT: '每日模拟订单上限'
+    };
+    const VERIFY_LABELS = {
+      schema: 'Schema',
+      hash_chain: '哈希链',
+      decision_binding: '决策绑定',
+      evidence_integrity: '证据完整性',
+      deterministic_replay: '确定性重放',
+      paper_only_policy: 'Paper-only',
+      ed25519_signature: 'Ed25519 签名'
+    };
+    const FEATURE_ORDER = Object.keys(FEATURE_LABELS);
+    const state = { stage: 0, report: null, verification: null, tamper: null, busy: false, scriptsVisible: true };
+    const $ = (id) => document.getElementById(id);
+
+    function esc(value) {
+      return String(value === null || value === undefined ? '' : value)
+        .replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;').replaceAll("'", '&#39;');
+    }
+    function text(value, fallback = '--') { return value === null || value === undefined || value === '' ? fallback : String(value); }
+    function pct(value) { const n = Number(value); return Number.isFinite(n) ? Math.abs(n) <= 1 ? n * 100 : n : null; }
+    function pctText(value) { const n = pct(value); return n === null ? '--' : `${n.toFixed(1)}%`; }
+    function money(value) { const n = Number(value); return Number.isFinite(n) ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(n) : '--'; }
+    function step(stage) { return state.report?.steps?.find((item) => item.stage === stage)?.payload || {}; }
+    function artifact() { return state.report || {}; }
+    function riskRuleValue(rule) {
+      if (!rule) return '--';
+      if (rule.rule_id === 'ORDER_NOTIONAL_LIMIT') return `${money(rule.observed)} / ${money(rule.limit)}`;
+      if (rule.rule_id === 'MODEL_CONFIDENCE' || rule.rule_id === 'PAPER_POSITION_LIMIT') return `${pctText(rule.observed)} / ${pctText(rule.limit)}`;
+      if (rule.rule_id === 'FEATURE_COVERAGE' && rule.observed && typeof rule.observed === 'object') return `${text(rule.observed.supplied_feature_count)}/${text(rule.observed.expected_feature_count)} · ${pctText(rule.observed.coverage)} / ${pctText(rule.limit)}`;
+      if (rule.rule_id === 'EVIDENCE_FRESHNESS' && rule.observed && typeof rule.observed === 'object') return `${text(rule.observed.stale_item_count, '0')} 项过期 / ${text(rule.observed.items?.length, '0')} 项`;
+      return `${text(rule.observed)} / ${text(rule.limit)}`;
+    }
+    function api(path, options = {}) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), options.timeoutMs || 15000);
+      return fetch(path, { ...options, signal: controller.signal, headers: { Accept: 'application/json', ...(options.body ? { 'Content-Type': 'application/json' } : {}) } })
+        .then(async (response) => { const payload = await response.json(); if (!response.ok) throw new Error(payload.error || `HTTP ${response.status}`); return payload; })
+        .catch((error) => { if (error.name === 'AbortError') throw new Error('本地服务响应超时'); throw error; })
+        .finally(() => clearTimeout(timer));
+    }
+    function setBusy(value) { state.busy = value; document.querySelectorAll('button[data-action]').forEach((button) => { if (!['stage', 'toggle-script'].includes(button.dataset.action)) button.disabled = value; }); }
+    function currentOutcome() { return artifact().outcome || {}; }
+    function updateLive() {
+      const outcome = currentOutcome();
+      const verification = state.verification || state.report?.verification;
+      $('liveScenario').textContent = state.report ? `${text(artifact().scenario_id)} · ${text(artifact().data_classification)}` : '尚未运行';
+      $('liveCandidate').textContent = text(outcome.candidate_action);
+      $('liveFinal').textContent = text(outcome.final_action);
+      $('liveOrder').textContent = text(outcome.order_status);
+      $('liveVerify').textContent = verification?.ok === true ? 'PASS' : verification?.ok === false ? 'FAIL' : '--';
+      $('liveCandidate').className = outcome.candidate_action === 'BUY' ? 'good' : outcome.candidate_action === 'SELL' ? 'bad' : '';
+      $('liveFinal').className = outcome.final_action === 'HOLD' ? 'warn' : outcome.final_action ? 'good' : '';
+      $('liveOrder').className = String(outcome.order_status || '').includes('NOT') ? 'warn' : outcome.order_status ? 'good' : '';
+      $('liveVerify').className = verification?.ok === true ? 'good' : verification?.ok === false ? 'bad' : '';
+    }
+    function renderProgress() {
+      $('progressLabel').textContent = `${String(state.stage + 1).padStart(2, '0')} / 06`;
+      $('progress').innerHTML = STAGES.map((item, index) => `<button class="stage-tab ${index === state.stage ? 'active' : ''} ${index < state.stage ? 'done' : ''}" data-action="stage" data-stage="${index}" type="button"><span class="stage-number">${String(index + 1).padStart(2, '0')}</span><span>${esc(item.label)}</span></button>`).join('');
+    }
+    function scriptBlock(value) { return state.scriptsVisible ? `<div class="script">${esc(value)}</div>` : ''; }
+    function action(label, name, className = 'button') { return `<button class="${className}" data-action="${name}" type="button">${label}</button>`; }
+    function empty(title, copy, button = '') { return `<div class="empty"><strong>${esc(title)}</strong><span>${esc(copy)}</span>${button ? `<div class="action-row">${button}</div>` : ''}</div>`; }
+    function facts(items) { return `<div class="facts">${items.map(([label, value, tone = '']) => `<div class="fact"><span class="fact-label">${esc(label)}</span><strong class="fact-value ${tone}">${esc(value)}</strong></div>`).join('')}</div>`; }
+    function renderIntro() {
+      return `${scriptBlock('这是 Flux Evidence Lab，面向数字资产研究和风险复核人员。它记录一条金融决策用了哪些证据、模型提出了什么、风控是否允许，以及报告能否重新验证。当前只做本地 Paper 模拟。')}
+        ${facts([['输入边界', '离线合成证据'], ['执行模式', 'PAPER ONLY', 'good'], ['外部订单', '物理不可用']])}
+        <div class="flow"><span class="flow-node">Evidence</span><span class="flow-arrow">→</span><span class="flow-node">Model</span><span class="flow-arrow">→</span><span class="flow-node">Risk veto</span><span class="flow-arrow">→</span><span class="flow-node">Paper</span><span class="flow-arrow">→</span><span class="flow-node">Verifier</span></div>
+        <p class="muted">接下来六段镜头会实际调用同一个本地项目接口。主线使用离线场景，公开行情不是这段录屏的稳定依赖。</p>
+        <div class="action-row">${action('开始离线演示 →', 'start', 'button primary')} ${action('直接看下一段', 'next', 'button')}</div>`;
+    }
+    function renderEvidence(report) {
+      const evidence = step('evidence');
+      const model = step('model');
+      const items = Array.isArray(evidence.evidence_items) ? evidence.evidence_items : [];
+      const vector = model.feature_vector || {};
+      const probabilities = model.class_probabilities || {};
+      const factors = model.feature_contributions?.[model.candidate_action] || {};
+      const rows = items.map((item) => `<tr><td><strong>${esc(FEATURE_LABELS[item.metric] || item.metric)}</strong><small class="mono">${esc(item.evidence_id)}</small><small>${esc(item.classification)}</small></td><td class="mono">${esc(item.value)}</td><td>${esc(item.unit || 'z_score')}<small>artifact 原值</small></td><td class="mono">${esc(vector[item.metric] ?? item.value)}</td><td>${esc(item.source?.name || '仓库 fixture')}</td><td class="mono">${esc(item.observed_at)}</td></tr>`).join('');
+      const probRows = ['BUY', 'HOLD', 'SELL'].map((name) => `<div class="prob-row"><span>${name}</span><span class="prob-track"><i style="width:${Math.min(100, pct(probabilities[name]) || 0)}%"></i></span><b>${esc(pctText(probabilities[name]))}</b></div>`).join('');
+      const factorRows = FEATURE_ORDER.map((name) => { const value = Number(factors[name] || 0); const width = Math.min(100, Math.abs(value) / .9 * 100); return `<div class="factor-row"><span class="factor-name" title="${esc(name)}">${esc(FEATURE_LABELS[name])}</span><span class="factor-track"><i class="factor-bar ${value < 0 ? 'negative' : ''}" style="width:${width}%"></i></span><span class="factor-value ${value < 0 ? 'negative' : ''}">${value > 0 ? '+' : ''}${value.toFixed(3)}</span></div>`; }).join('');
+      return `${scriptBlock('这里使用八个固定的合成证据，方便离线复现。模型根据这些输入计算 BUY、HOLD、SELL 三类概率，并展示各因子的贡献。页面上的候选动作来自这次程序运行，概率尚未做现实市场校准。')}
+        ${facts([['证据数量', text(items.length)], ['模型特征', `${text(Object.keys(vector).length)} / 8`, Object.keys(vector).length === 8 ? 'good' : 'warn'], ['候选动作', text(model.candidate_action), model.candidate_action === 'BUY' ? 'good' : 'warn']])}
+        <div class="two-col"><div class="subpanel"><h3>Evidence 账本 <small>${esc(text(evidence.data_classification, 'SYNTHETIC_DEMO'))}</small></h3><div class="table-wrap"><table><thead><tr><th>指标 / 分类</th><th>值</th><th>单位</th><th>模型输入</th><th>来源</th><th>As-of</th></tr></thead><tbody>${rows || '<tr><td colspan="6">没有返回 evidence_items</td></tr>'}</tbody></table></div></div><div class="subpanel"><h3>模型推理 <small>${esc(text(model.model_version))}</small></h3><div class="probability">${probRows}</div><p class="muted" style="font-size:11px;margin:17px 0 10px">${esc(model.candidate_action || 'HOLD')} 方向因子贡献</p><div class="factor-list">${factorRows}</div></div></div>
+        <div class="action-row">${action('下一段：运行超限阻断 →', 'run-risk', 'button primary')} ${action('重新运行建设性', 'start', 'button')}</div>`;
+    }
+    function renderRisk(report) {
+      const model = step('model');
+      const risk = step('risk');
+      const outcome = currentOutcome();
+      const rules = Array.isArray(risk.rules) ? risk.rules : [];
+      const list = rules.map((rule) => `<li class="risk-item"><span style="display:flex;gap:8px"><span class="check-mark ${rule.passed ? 'good' : 'bad'}">${rule.passed ? '✓' : '×'}</span><span class="risk-copy"><strong>${esc(RISK_LABELS[rule.rule_id] || rule.rule_id)}</strong><small>${rule.passed ? '通过' : '触发确定性否决'}</small></span></span><span class="risk-value">${esc(riskRuleValue(rule))}</span></li>`).join('');
+      return `${scriptBlock('切换到超限场景后，模型仍可能提出 BUY，但请求金额超过了风控上限。这里可以看到规则否决，最终动作变为 HOLD，订单没有创建。风控的否决由程序直接执行。')}
+        ${facts([['模型候选', text(model.candidate_action), 'good'], ['最终决策', text(outcome.final_action), outcome.final_action === 'HOLD' ? 'warn' : 'good'], ['订单状态', text(outcome.order_status), String(outcome.order_status).includes('NOT') ? 'warn' : 'good']])}
+        <div class="two-col"><div class="subpanel"><h3>权限顺序</h3><div class="flow"><span class="flow-node">Model signal · ${esc(text(model.candidate_action))}</span><span class="flow-arrow">→</span><span class="flow-node">Risk veto · ${esc(text(risk.status))}</span><span class="flow-arrow">→</span><span class="flow-node">Final · ${esc(text(outcome.final_action))}</span></div><p class="muted" style="font-size:12px">模型有提议权，确定性金融规则有最终否决权。</p></div><div class="subpanel"><h3>风控规则 <small>${esc(text(risk.risk_policy_version))}</small></h3><ul class="risk-list">${list || '<li>没有返回风控规则</li>'}</ul></div></div>
+        <div class="action-row">${action('下一段：重新运行建设性 →', 'run-constructive', 'button primary')} ${action('回看证据与模型', 'stage-1', 'button')}</div>`;
+    }
+    function renderAudit(report) {
+      const evidence = step('evidence');
+      const order = step('order');
+      const hashes = (report.steps || []).map((item) => `<li class="hash-item"><header><strong>${esc(item.stage)}</strong><small>step ${esc(item.sequence)} · ${item.sequence === 1 ? '链起点' : '绑定前序哈希'}</small></header><code>${esc(item.hash)}</code></li>`).join('');
+      return `${scriptBlock('现在重新运行建设性场景，得到本地模拟结果。研究 ID 关联证据快照，决策 ID 关联整条决策记录。证据、模型、风险和订单四步通过哈希相连，便于事后检查。')}
+        ${facts([['research_id', text(report.research_id), 'good'], ['decision_id', text(report.decision_id), 'good'], ['Paper 订单', text(order.status), order.status === 'SIMULATED_ACCEPTED' ? 'good' : 'warn']])}
+        <div class="two-col"><div class="subpanel"><h3>Paper 结果</h3><div class="flow"><span class="flow-node">${esc(text(report.outcome?.final_action))}</span><span class="flow-arrow">→</span><span class="flow-node">${esc(text(order.status))}</span></div><p class="muted" style="font-size:12px">${esc(text(order.reason, '本地模拟记录'))}。外部路由：${esc(text(order.external_route, 'DISABLED'))}。</p><p class="muted mono" style="font-size:10px">evidence items: ${esc(evidence.evidence_summary?.item_count)} · as-of: ${esc(report.as_of)}</p></div><div class="subpanel"><h3>SHA-256 步骤链 <small>${esc(text(report.steps?.length, '0'))} 步</small></h3><ol class="hash-list">${hashes || '<li>没有返回哈希链</li>'}</ol></div></div>
+        <div class="action-row">${action('下一段：验证原件 →', 'next', 'button primary')} ${action('重新生成建设性', 'run-constructive', 'button')}</div>`;
+    }
+    function renderVerification(report) {
+      const sig = report.signature || {};
+      const verification = state.verification;
+      const checks = verification?.checks && typeof verification.checks === 'object' ? Object.entries(verification.checks).map(([key, value]) => `<li class="check-item"><span style="display:flex;align-items:center;gap:8px"><span class="check-mark ${value ? 'good' : 'bad'}">${value ? '✓' : '×'}</span>${esc(VERIFY_LABELS[key] || key)}</span><span class="pill ${value ? 'good' : 'bad'}">${value ? 'PASS' : 'FAIL'}</span></li>`).join('') : '<li class="muted">点击“验证原件”查看实际检查结果。</li>';
+      const tamper = state.tamper ? `<div class="tamper-box ${state.tamper.ok === false ? 'good' : 'bad'}">${esc(state.tamper.message)}</div>` : '<div class="tamper-box">篡改副本尚未测试，原始 artifact 保持不变。</div>';
+      return `${scriptBlock('点击验证原件，验证入口重新检查哈希链、确定性重放和签名。再测试一个在内存中修改的副本，验证器将它拒绝，原件保持不变。这个结果支持报告的完整性检查，不保证输入真实或模型预测正确。')}
+        ${facts([['算法', text(sig.algorithm, 'Ed25519')], ['原件状态', verification?.ok === true ? '验证通过' : verification?.ok === false ? '验证失败' : '等待点击', verification?.ok === true ? 'good' : verification?.ok === false ? 'bad' : 'warn'], ['Key fingerprint', text(sig.key_fingerprint)]])}
+        <div class="two-col"><div class="subpanel"><h3>签名材料</h3><p class="mono" style="font-size:10px;color:var(--muted)">Artifact hash<br><span style="color:var(--lime-soft)">${esc(sig.manifest?.artifact_hash)}</span></p><p class="mono" style="font-size:10px;color:var(--muted)">Chain head<br><span style="color:var(--lime-soft)">${esc(sig.manifest?.chain_head)}</span></p><p class="muted" style="font-size:11px">运行时密钥为临时 Ed25519 key；签名说明完整性边界，不是上游真实性或收益证明。</p></div><div class="subpanel"><h3>验证检查 <small>${verification ? (verification.ok ? '原件 PASS' : '原件 FAIL') : '待运行'}</small></h3><ul class="check-list">${checks}</ul></div></div>
+        ${tamper}
+        <div class="action-row">${action('验证原件', 'verify', 'button primary')} ${action('篡改副本测试', 'tamper', 'button danger')} ${action('下一段：边界与收束 →', 'next', 'button')}</div>`;
+    }
+    function renderBoundary() {
+      return `${scriptBlock('模型负责提议，风控负责约束，Paper 负责模拟，验证器负责复核。Flux Evidence Lab 让 AI 辅助金融决策的过程可以追溯、重放和检查。')}
+        ${facts([['自动完成', '采集 · 模型 · 风控 · 验签'], ['人工完成', '选择 · 审阅 · 录制'], ['禁止事项', '真实资金与外部路由']])}
+        <div class="two-col"><div class="subpanel"><h3>责任边界</h3><ul class="boundary-list"><li>自动：采集、归一化、模型、风控、签名、验签</li><li>人工：选择场景、审阅证据、导出报告</li><li style="color:var(--red)">禁止：真实资金、交易所、钱包、外部订单路由</li></ul></div><div class="subpanel"><h3>模型限制</h3><ul class="boundary-list"><li>演示系数不代表未来收益</li><li>概率没有生产级现实校准</li><li>完整性验证不等于数据真实或模型正确</li><li>当前没有 TEE / ZKP</li></ul></div></div>
+        <div class="script" style="margin-top:22px">We don't prove AI can predict the market. We prove its financial decisions can be independently verified.</div>
+        <div class="action-row">${action('从头开始一遍', 'start', 'button primary')} <a class="button" href="/" target="_blank" rel="noreferrer">打开实际控制台 ↗</a></div>`;
+    }
+    function renderStage() {
+      const meta = STAGES[state.stage];
+      $('stageKicker').textContent = `${String(state.stage + 1).padStart(2, '0')} / ${meta.label}`;
+      $('stageTitle').textContent = meta.title;
+      $('stageDescription').textContent = meta.description;
+      $('stageTime').textContent = meta.time;
+      let body;
+      if (state.stage === 0) body = renderIntro();
+      else if (state.stage === 1) body = state.report?.scenario_id === 'offline-constructive' ? renderEvidence(state.report) : empty('还没有离线建设性报告', '先运行离线建设性，页面会加载真实的 8 条证据和模型结果。', action('运行离线建设性', 'start', 'button primary'));
+      else if (state.stage === 2) body = state.report?.scenario_id === 'risk-limit' ? renderRisk(state.report) : empty('还没有超限阻断报告', '这一段需要重新运行 risk-limit 场景，展示真实的规则否决结果。', action('运行超限阻断', 'run-risk', 'button primary'));
+      else if (state.stage === 3) body = state.report?.scenario_id === 'offline-constructive' ? renderAudit(state.report) : empty('需要重新生成建设性结果', '为了让 Paper 记录、research_id 和哈希链来自同一份实际 artifact，请重新运行离线建设性。', action('重新运行建设性', 'run-constructive', 'button primary'));
+      else if (state.stage === 4) body = state.report?.scenario_id === 'offline-constructive' ? renderVerification(state.report) : empty('需要建设性报告作为原件', '先回到建设性场景生成一份 artifact，再执行原件与篡改验证。', action('重新运行建设性', 'run-constructive', 'button primary'));
+      else body = renderBoundary();
+      $('stageBody').innerHTML = body;
+      renderProgress();
+      updateLive();
+    }
+    function showError(error) { const message = error?.message || String(error); $('runtimeText').textContent = message; $('runtime').className = 'runtime'; const toast = document.createElement('div'); toast.className = 'notice'; toast.textContent = `操作失败：${message}`; $('stageBody').prepend(toast); }
+    async function runScenario(scenario, stageAfter) {
+      if (state.busy) return;
+      setBusy(true);
+      try {
+        const payload = await api('/api/run', { method: 'POST', body: JSON.stringify({ scenario }) });
+        state.report = payload.artifact;
+        state.verification = null;
+        state.tamper = null;
+        state.stage = stageAfter;
+        renderStage();
+        $('runtime').className = 'runtime ready';
+        $('runtimeText').textContent = '核心就绪 · 实际 API 已连接';
+      } catch (error) { showError(error); } finally { setBusy(false); }
+    }
+    async function verifyCurrent() {
+      if (state.busy || !state.report) return;
+      setBusy(true);
+      try { const payload = await api('/api/verify', { method: 'POST', body: JSON.stringify({ artifact: state.report }) }); state.verification = payload.verification || payload; renderStage(); }
+      catch (error) { showError(error); } finally { setBusy(false); }
+    }
+    async function tamperCurrent() {
+      if (state.busy || !state.report) return;
+      setBusy(true);
+      try {
+        const tampered = structuredClone(state.report);
+        tampered.safety = { ...(tampered.safety || {}), external_order_route: 'TAMPERED_ENABLED' };
+        const payload = await api('/api/verify', { method: 'POST', body: JSON.stringify({ artifact: tampered }) });
+        const verification = payload.verification || payload;
+        const codes = Array.isArray(verification.errors) ? verification.errors.map((item) => item.code).filter(Boolean).slice(0, 3).join(' · ') : '';
+        state.tamper = { ok: verification.ok, message: verification.ok === false ? `篡改已检出：${codes || '完整性检查拒绝'}。原始 artifact 未修改。` : '警告：篡改副本意外通过验证。' };
+        renderStage();
+      } catch (error) { showError(error); } finally { setBusy(false); }
+    }
+    function go(stage) { if (state.busy) return; state.stage = Math.max(0, Math.min(STAGES.length - 1, Number(stage))); renderStage(); }
+    document.body.addEventListener('click', (event) => {
+      const target = event.target.closest('[data-action]');
+      if (!target || target.disabled) return;
+      const actionName = target.dataset.action;
+      if (actionName === 'stage') return go(target.dataset.stage);
+      if (actionName === 'toggle-script') { state.scriptsVisible = !state.scriptsVisible; target.textContent = state.scriptsVisible ? '隐藏台词' : '显示台词'; renderStage(); return; }
+      if (actionName === 'start') return runScenario('offline-constructive', 1);
+      if (actionName === 'run-risk') return runScenario('risk-limit', 2);
+      if (actionName === 'run-constructive') return runScenario('offline-constructive', 3);
+      if (actionName === 'verify') return verifyCurrent();
+      if (actionName === 'tamper') return tamperCurrent();
+      if (actionName === 'next') return go(state.stage + 1);
+      if (actionName === 'stage-1') return go(1);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.target.matches('input, textarea, select')) return;
+      if (event.key >= '1' && event.key <= '6') go(Number(event.key) - 1);
+      else if (event.key === 'ArrowRight') go(state.stage + 1);
+      else if (event.key === 'ArrowLeft') go(state.stage - 1);
+      else if (event.code === 'Space') { event.preventDefault(); const first = document.querySelector('#stageBody [data-action]'); if (first && !first.disabled) first.click(); }
+    });
+    api('/api/health').then((payload) => { $('runtime').className = 'runtime ready'; $('runtimeText').textContent = `${text(payload.mode, 'PAPER_ONLY')} · 核心就绪`; }).catch((error) => { $('runtimeText').textContent = error.message; });
+    renderStage();
+  </script>
+</body>
+</html>

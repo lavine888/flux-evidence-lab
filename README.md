@@ -1,5 +1,7 @@
 # Flux Evidence Lab
 
+**English** | [简体中文](README.zh-CN.md)
+
 **Verifiable evidence and audit infrastructure for AI-assisted financial decisions.**
 
 Flux Evidence Lab is a BTC research and decision-audit prototype for the AIx Origin Summit Flux track. It connects public or offline evidence to deterministic feature transforms, a versioned probabilistic model, deterministic risk controls, a local paper simulation, and an independently verifiable audit artifact.

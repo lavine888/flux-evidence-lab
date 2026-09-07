@@ -1,82 +1,133 @@
-# Flux Evidence Lab
+<div align="center">
 
-**English** | [简体中文](README.zh-CN.md)
+# 🔎 Flux Evidence Lab
 
-**Verifiable evidence and audit infrastructure for AI-assisted financial decisions.**
+### Don't just trust an AI decision. Verify it.
 
-Flux Evidence Lab is a BTC research and decision-audit prototype for the AIx Origin Summit Flux track. It connects public or offline evidence to deterministic feature transforms, a versioned probabilistic model, deterministic risk controls, a local paper simulation, and an independently verifiable audit artifact.
+**A verifiable evidence and audit layer for AI-assisted financial decisions.**
 
-> **This is not a live trading system.**
->
-> Public evidence + paper-only simulation · no exchange · no wallet · no real funds
+`Evidence → Model → Risk → Paper Decision → Cryptographic Verification`
 
-![Flux Evidence Lab judge console](promo/agent-ui/dashboard-full.png)
+**Built for AIx Origin Summit · Flux Track**
 
-## Why this matters
+[简体中文](README.zh-CN.md) · [Architecture](docs/ARCHITECTURE.md) · [3-min Demo Script](docs/DEMO_SCRIPT_3MIN.md) · [Audit Sample](docs/AUDIT_REPORT_SAMPLE.md)
 
-A `BUY`, `HOLD`, or `SELL` label is not enough for a research or risk reviewer. The useful question is whether the result can be traced from evidence to model inputs, risk decisions, simulated outcome, and post-run integrity checks.
+</div>
 
-Flux Evidence Lab makes that path explicit:
+> **Paper-only by design.** No exchange, no wallet, no real funds, no live execution.
 
-```text
-Evidence → Decision → Risk → Result → Verification
-```
+<p align="center">
+  <img src="promo/agent-ui/dashboard-full.png" alt="Flux Evidence Lab judge console" width="100%" />
+</p>
 
-The goal is not to claim that the demo model predicts markets or produces returns. The goal is to make AI-assisted financial decisions traceable, explainable, reproducible, and independently reviewable.
+## The problem
 
-## Core architecture
+AI can generate a financial decision in seconds. A reviewer still needs to answer much harder questions:
+
+- What evidence produced this decision?
+- How did that evidence become model inputs?
+- Did risk controls change the model's recommendation?
+- Was an order actually created?
+- Has anything been modified afterwards?
+
+Most demos show the **answer**.
+
+**Flux Evidence Lab preserves the decision trail.**
+
+## What Flux Evidence Lab does
+
+Flux Evidence Lab turns a BTC research decision into a replayable audit artifact:
 
 ```text
 Public / offline evidence
         ↓
-Deterministic, whitelisted feature transforms
+Deterministic feature transforms
         ↓
-btc-multinomial-logit@1.0.0
+Versioned probabilistic model
         ↓
 Candidate BUY / HOLD / SELL
         ↓
-btc-paper-risk@1.1.0 deterministic veto
+Deterministic risk veto
         ↓
-Local paper order or NOT_CREATED
+Local Paper result
         ↓
-SHA-256 chain + ephemeral Ed25519 signature
+SHA-256 chain + Ed25519 signature
         ↓
-Separate verification path and tamper detection
+Independent verification + tamper detection
 ```
 
 The responsibility boundary is deliberate:
 
-- **Model proposes.** The transparent multinomial logistic model directly produces the candidate action, class probabilities, and per-feature contributions.
-- **Risk decides.** The deterministic Paper risk layer is the final authority and can return `HOLD` after a `BUY` or `SELL` candidate.
-- **Paper simulates.** Orders, balances, positions, and fills are local demo records only; there is no external order route.
-- **Verifier checks.** The verifier replays evidence normalization, model inference, risk evaluation, order construction, the four-step hash chain, and the Ed25519 signature.
+- **Model proposes.** `btc-multinomial-logit@1.0.0` produces the candidate action, class probabilities, and per-feature contributions.
+- **Risk decides.** `btc-paper-risk@1.1.0` is the final authority and can turn an actionable model candidate into `HOLD`.
+- **Paper simulates.** Orders, balances, positions, and fills remain local demo records only.
+- **Verifier checks.** A separate verification path replays evidence normalization, inference, risk evaluation, order construction, hash chaining, and signature validation.
 
-The detailed component and trust-boundary diagram is in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) and [`docs/architecture-diagram.svg`](docs/architecture-diagram.svg).
+## Why it is different
 
-## How it works
+| Typical AI trading demo | Flux Evidence Lab |
+| --- | --- |
+| Shows a recommendation | Preserves the evidence trail |
+| Model output is the final answer | Model proposes, risk decides |
+| Hard to reproduce | Deterministic offline baseline |
+| Output can be edited after the fact | Signed audit artifact |
+| Verification depends on the UI | Independent verifier |
+| Often implies execution | Paper-only boundary is enforced |
+
+The project does **not** claim that the demo model predicts markets, is calibrated, or produces returns. The value of the prototype is traceability, reproducibility, explicit risk control, and post-run integrity checking.
+
+## Core demo: verify, tamper, reject
+
+The fastest way to understand the project is to run the offline baseline:
+
+1. Run `offline-constructive`.
+2. Generate a signed decision artifact.
+3. Click **Verify Original** → the original artifact should verify.
+4. Click **Tamper Copy**.
+5. Verify again → the modified artifact should be rejected.
+
+The verifier independently checks the full decision path, not just a front-end status badge.
+
+Integrity has a limited meaning: SHA-256 and Ed25519 can detect changes after evidence has been collected and signed. They do **not** prove that upstream data is true, that the model is correct, that the strategy is profitable, that the signer has a persistent real-world identity, or that timestamps come from a trusted timestamping authority.
+
+## Architecture
+
+<p align="center">
+  <img src="docs/architecture-diagram.svg" alt="Flux Evidence Lab architecture" width="100%" />
+</p>
+
+A shared `decision_id` binds the `evidence → model → risk → order` payloads into a four-step SHA-256 chain. The resulting artifact is signed with an ephemeral Ed25519 runtime key; the private key is never written into the artifact.
+
+For component boundaries and trust assumptions, see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+## Evidence and decision flow
 
 1. Evidence is normalized with source, classification, observation time, and a stable `research_id`.
-2. `public-btc-live` reads four keyless public sources when requested: CoinLore, Coin Metrics Community, Alternative.me, and GitHub `bitcoin/bitcoin`. Their retrieval time and source time remain separate; responses are not cached or written to disk.
-3. The versioned model maps eight bounded features to `BUY` / `HOLD` / `SELL` probabilities and factor contributions. Its parameters are transparent demo parameters, not evidence of accuracy, calibration, or profitability.
-4. `btc-paper-risk@1.1.0` checks Paper-only mode, per-metric freshness, future evidence, feature coverage, public-source health, reference-price binding, model confidence, notional, position, inventory, and daily order limits.
-5. A passing actionable decision creates a local `SIMULATED_ACCEPTED` order. A `HOLD` or a risk veto creates `NOT_CREATED`; no exchange or wallet operation exists.
-6. The `evidence → model → risk → order` payloads share a `decision_id`, form a SHA-256 chain, and are signed by an ephemeral Ed25519 runtime key. The private key is never written to the artifact.
+2. `public-btc-live` can read four keyless public sources: CoinLore, Coin Metrics Community, Alternative.me, and GitHub `bitcoin/bitcoin`.
+3. Eight bounded features are mapped to `BUY` / `HOLD` / `SELL` probabilities and feature contributions.
+4. The risk layer checks Paper-only mode, freshness, future evidence, feature coverage, source health, reference-price binding, model confidence, notional, position, inventory, and daily order limits.
+5. A passing actionable decision creates a local `SIMULATED_ACCEPTED` record. A `HOLD` or risk veto creates `NOT_CREATED`.
+6. The final artifact can be replayed and independently verified.
+
+For live public data, retrieval time and source time remain separate. Responses are not cached or silently replaced by synthetic values when a public source fails.
 
 ## Demo scenarios
 
 | Scenario | Input | What it demonstrates |
 | --- | --- | --- |
 | `offline-constructive` | Fixed synthetic fixture | Fresh evidence, model candidate, risk pass, local Paper order |
-| `stale-evidence` | Fixed synthetic fixture | `EVIDENCE_FRESHNESS` veto; candidate remains visible, order is not created |
+| `stale-evidence` | Fixed synthetic fixture | `EVIDENCE_FRESHNESS` veto; candidate remains visible, no order is created |
 | `risk-limit` | Fixed synthetic fixture | `ORDER_NOTIONAL_LIMIT` veto; final action falls back to `HOLD` |
-| `public-btc-live` | Four live keyless public HTTPS sources | Real request-time public evidence with explicit source status and time semantics |
-| `local-8790` | Optional local read-only service | Unverified review-only input; never a core dependency or executable Paper path |
+| `public-btc-live` | Four keyless public HTTPS sources | Request-time public evidence with explicit source status and time semantics |
+| `local-8790` | Optional local read-only service | Review-only input; not a core dependency or executable Paper path |
 
-The three offline scenarios are the reproducible baseline. Public-source availability, prices, timestamps, probabilities, and actions can change between runs and must be reported as observed. If a public source fails, the application exposes the failure; it does not silently substitute synthetic values.
+The three offline scenarios are the reproducible baseline. Live public-source prices, timestamps, probabilities, availability, and resulting actions can change between runs.
 
 ## Quick start
 
-Requirements: Node.js `>=20.11.0` (Node.js 24 is recommended). No database, API key, wallet, exchange account, or `.env` file is required for the offline baseline.
+**Requirements:** Node.js `>=20.11.0` (Node.js 24 recommended).
+
+The offline baseline requires no database, API key, wallet, exchange account, or `.env` file.
 
 ```powershell
 cd app
@@ -86,29 +137,22 @@ npm test
 npm start
 ```
 
-Open the local URL printed by the server, normally [http://127.0.0.1:8810](http://127.0.0.1:8810). The service binds to `127.0.0.1` only. To use another port:
+Open the local URL printed by the server, normally:
+
+```text
+http://127.0.0.1:8810
+```
+
+To use another port:
 
 ```powershell
 $env:PORT = '8811'
 npm start
 ```
 
-The UI lets a reviewer run a scenario, inspect `research_id` and `decision_id`, review evidence and risk rules, re-verify the artifact, run an in-memory tamper test, view JSON, and download the report.
+The UI lets a reviewer run a scenario, inspect `research_id` and `decision_id`, review evidence and risk rules, re-verify the artifact, run an in-memory tamper test, inspect JSON, and download the report.
 
-## Verification
-
-The local API exposes:
-
-- `GET /api/health`
-- `GET /api/scenarios`
-- `GET /api/model-card`
-- `POST /api/run`
-- `GET /api/reports/:id`
-- `POST /api/verify`
-
-For an offline verification path, run `offline-constructive`, click **验证原件**, then click **篡改副本测试**. The original report should verify, while a modified safety field should be rejected. The automated tests cover the same contracts, including re-chaining and re-signing attempts that try to bypass public transform, source-health, reference-price, or Paper-only checks.
-
-Integrity has a limited meaning. SHA-256 and Ed25519 detect changes after evidence has been collected and signed; they do not prove upstream truth, model correctness, profitability, long-term signer identity, or a trusted timestamp.
+## Offline verification
 
 Committed audit examples can be checked without network access:
 
@@ -116,11 +160,22 @@ Committed audit examples can be checked without network access:
 node tools/review-evidence.mjs --verify-examples
 ```
 
-See [`docs/AUDIT_REPORT_SAMPLE.md`](docs/AUDIT_REPORT_SAMPLE.md) for the field-by-field audit mapping and [`examples/`](examples/) for the generated artifacts.
+The local API exposes:
+
+```text
+GET  /api/health
+GET  /api/scenarios
+GET  /api/model-card
+POST /api/run
+GET  /api/reports/:id
+POST /api/verify
+```
+
+See [docs/AUDIT_REPORT_SAMPLE.md](docs/AUDIT_REPORT_SAMPLE.md) for the field-by-field audit mapping and [examples/](examples/) for committed verification artifacts.
 
 ## Safety and compliance boundary
 
-This project is for competition demonstration, software research, and Paper decision review. It is not a broker, exchange, investment adviser, custodian, wallet, or live execution service.
+This repository is a competition demonstration and software-research prototype. It is **not** a broker, exchange, investment adviser, custodian, wallet, or live execution service.
 
 - No exchange connectivity
 - No wallet connectivity
@@ -130,57 +185,47 @@ This project is for competition demonstration, software research, and Paper deci
 - No investment, performance, or accuracy claim
 - No implicit short selling; Paper `SELL` requires simulated inventory
 
-`public-btc-live` uses real public inputs, but execution remains simulated. “Paper-only” describes the account, order, position, and fill boundary; it does not re-label public market data as synthetic. See [`docs/COMPLIANCE.md`](docs/COMPLIANCE.md) for the complete data, network, cross-border, and responsibility boundary.
+`public-btc-live` uses real public inputs, but execution remains simulated. “Paper-only” describes the account, order, position, and fill boundary; it does not re-label public market data as synthetic.
 
-## Repository structure
+See [docs/COMPLIANCE.md](docs/COMPLIANCE.md) for the complete data, network, cross-border, and responsibility boundary.
+
+## Repository map
 
 ```text
 app/
-├─ server.js                 # local HTTP API and static console server
+├─ server.js                 # local HTTP API + console server
 ├─ public/                   # judge console
 ├─ src/adapters/             # public BTC read-only adapter
-├─ src/core/                 # evidence, model path, risk, chain, signing, verification
+├─ src/core/                 # evidence, model, risk, chain, signing, verification
 ├─ model/                    # frozen transparent model artifact
 ├─ fixtures/                 # reproducible offline scenarios
 └─ test/                     # Node native tests
-docs/                        # architecture, compliance, demo, testing, submission notes
-examples/                    # committed, independently verifiable audit examples
-promo/agent-ui/              # representative judge-console screenshots
-promo/COPY_DECK.md           # competition and presentation copy
-tools/                       # audit review plus portable handoff helpers
+
+docs/                        # architecture, compliance, testing, demo, submission notes
+examples/                    # committed independently verifiable audit examples
+promo/agent-ui/              # judge-console screenshots
+tools/                       # audit review + portable handoff helpers
 ```
 
-## Source repository vs. portable handoff
+## Documentation
 
-This repository is the **source repository**. The Windows portable handoff ZIP is a separate delivery artifact.
+- [Architecture](docs/ARCHITECTURE.md)
+- [3-minute demo script](docs/DEMO_SCRIPT_3MIN.md)
+- [Audit report sample](docs/AUDIT_REPORT_SAMPLE.md)
+- [Test plan](docs/TEST_PLAN.md)
+- [Test report](docs/TEST_REPORT.md)
+- [Compliance boundary](docs/COMPLIANCE.md)
+- [Competition requirements matrix](docs/COMPETITION_REQUIREMENTS_MATRIX.md)
+- [Prior-work disclosure](docs/PRIOR_WORK_DISCLOSURE.md)
+- [Third-party notices](docs/THIRD_PARTY_NOTICES.md)
+- [Submission notes](docs/SUBMISSION.md)
 
-The source checkout intentionally excludes:
+## Source checkout vs. portable handoff
 
-- `runtime/node.exe` and the portable runtime directory;
-- generated `promo/offline-kit/` PDFs, PNGs, and print ZIP;
-- caches, logs, `node_modules/`, coverage, and local output.
+This GitHub repository is the **source repository**. The historical Windows portable handoff is a separate delivery artifact and may contain a bundled runtime and generated offline-kit files that are intentionally not committed here.
 
-The original [`manifest.sha256`](manifest.sha256) is retained as provenance for the verified handoff ZIP. It describes that portable artifact, not this source checkout; therefore a normal GitHub checkout is not expected to match or pass the portable-package manifest. The root `.cmd` launchers and `tools/*.ps1` helpers are likewise intended for a complete portable handoff containing the matching runtime and manifest. For a source checkout, use the Node.js commands above.
-
-The historical Windows x64 portable candidate results remain in [`docs/TEST_REPORT.md`](docs/TEST_REPORT.md) and [`docs/SUBMISSION.md`](docs/SUBMISSION.md) as external evidence. That candidate ZIP, its bundled Node runtime, and `promo/offline-kit/` are not part of this checkout; the current-source results are recorded separately and must not be conflated with the historical package.
-
-## Competition context
-
-The project is positioned as verifiable AI reasoning / quantitative-factor infrastructure, with a supporting AI × Fintech decision loop. The repository includes the demo script, test plan/report, competition requirements matrix, prior-work disclosure, and third-party notices:
-
-- [`docs/DEMO_SCRIPT_3MIN.md`](docs/DEMO_SCRIPT_3MIN.md)
-- [`docs/TEST_PLAN.md`](docs/TEST_PLAN.md)
-- [`docs/TEST_REPORT.md`](docs/TEST_REPORT.md)
-- [`docs/COMPETITION_REQUIREMENTS_MATRIX.md`](docs/COMPETITION_REQUIREMENTS_MATRIX.md)
-- [`docs/PRIOR_WORK_DISCLOSURE.md`](docs/PRIOR_WORK_DISCLOSURE.md)
-- [`docs/THIRD_PARTY_NOTICES.md`](docs/THIRD_PARTY_NOTICES.md)
-- [`docs/PROJECT_BRIEF.md`](docs/PROJECT_BRIEF.md)
-- [`docs/AUDIT_REPORT_SAMPLE.md`](docs/AUDIT_REPORT_SAMPLE.md)
-- [`docs/ATTRIBUTION.md`](docs/ATTRIBUTION.md)
-- [`docs/TEAM_CONFIRMATION_REQUIRED.md`](docs/TEAM_CONFIRMATION_REQUIRED.md)
-
-Official rule version, submission portal details, video, rehearsal evidence, cross-border/vendor review, the competition-period `>=70%` calculation, final license approval, and external submission authorization remain team-confirmed `TBD` items. Technical tests must not be presented as model-performance or competition-submission proof.
+The retained [manifest.sha256](manifest.sha256) documents provenance for that portable artifact; a normal source checkout is therefore not expected to match the portable-package manifest. Current-source test results and historical portable-candidate results should be treated as separate evidence.
 
 ## License
 
-**UNLICENSED pending an explicit team decision.** No MIT, Apache-2.0, or other project license has been added without team authorization. See [`docs/LICENSE-DECISION.md`](docs/LICENSE-DECISION.md).
+**UNLICENSED pending an explicit team decision.** No MIT, Apache-2.0, or other project license has been added without team authorization. See [docs/LICENSE-DECISION.md](docs/LICENSE-DECISION.md).

@@ -6,7 +6,6 @@
   const { createServer } = require('node:http');
   const fs = require('node:fs/promises');
   const path = require('node:path');
-  const { pathToFileURL } = require('node:url');
 
   const SCRIPT_DIR = typeof __dirname === 'string'
     ? __dirname
@@ -77,9 +76,11 @@
   function loadRuntime() {
     if (!runtimePromise) {
       runtimePromise = Promise.all([
-        import(pathToFileURL(path.join(SCRIPT_DIR, 'src', 'core', 'index.mjs')).href),
-        import(pathToFileURL(path.join(SCRIPT_DIR, 'fixtures', 'scenarios.mjs')).href),
-        import(pathToFileURL(path.join(SCRIPT_DIR, 'src', 'adapters', 'public-btc.mjs')).href)
+        // Keep these specifiers static so Vercel's Node File Trace includes the
+        // ESM runtime modules in the generated CommonJS function bundle.
+        import('./src/core/index.mjs'),
+        import('./fixtures/scenarios.mjs'),
+        import('./src/adapters/public-btc.mjs')
       ]).then(([core, fixtures, publicBtc]) => {
         for (const name of ['runBtcDecision', 'verifyDecisionArtifact', 'createRuntimeSigner']) {
           if (typeof core[name] !== 'function') throw new Error(`Core export ${name} is unavailable`);

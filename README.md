@@ -227,6 +227,18 @@ This GitHub repository is the **source repository**. The historical Windows port
 
 The retained [manifest.sha256](manifest.sha256) documents provenance for that portable artifact; a normal source checkout is therefore not expected to match the portable-package manifest. Current-source test results and historical portable-candidate results should be treated as separate evidence.
 
+## Related projects
+
+Companion projects built on the same evidence-first stance:
+
+| Project | What it is |
+| --- | --- |
+| [Lavine-Skill-Runtime](https://github.com/lavine888/Lavine-Skill-Runtime) | Execution layer that runs reviewed skills end to end |
+| [Accounting-Red-Flag-Detector](https://github.com/lavine888/Accounting-Red-Flag-Detector) | Point-in-time forensic screen for A-share accounting red flags |
+| [career-alpha](https://github.com/lavine888/career-alpha) | Evidence-grounded career decision system |
+| [ScamCity](https://github.com/lavine888/ScamCity) | Multi-agent sandbox for fraud-intervention experiments |
+| [skill-buffett-moat-screener](https://github.com/lavine888/skill-buffett-moat-screener) | Point-in-time Buffett moat screener, packaged as a skill |
+
 ## License
 
 **UNLICENSED pending an explicit team decision.** No MIT, Apache-2.0, or other project license has been added without team authorization. See [docs/LICENSE-DECISION.md](docs/LICENSE-DECISION.md).

@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Compliance boundary
+    url: https://github.com/lavine888/flux-evidence-lab/blob/main/docs/COMPLIANCE.md
+    about: Data, network, cross-border, and responsibility boundary
+  - name: Audit report mapping
+    url: https://github.com/lavine888/flux-evidence-lab/blob/main/docs/AUDIT_REPORT_SAMPLE.md
+    about: Field-by-field mapping of the signed audit artifact
+  - name: Contributing guide
+    url: https://github.com/lavine888/flux-evidence-lab/blob/main/CONTRIBUTING.md
+    about: Invariants, local verification commands, and the PR checklist

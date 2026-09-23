@@ -1,0 +1,44 @@
+name: Verification failure
+description: A committed audit example or a produced artifact does not verify
+title: "[Verify] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Verification must not depend on the UI. Please describe how the artifact was produced and how it failed to verify.
+  - type: input
+    id: artifact
+    attributes:
+      label: Artifact / example id
+      description: The report id, example filename, or `manifest.sha256` entry involved
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Verification command and output
+      placeholder: |
+        node tools/review-evidence.mjs --verify-examples
+        ...
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind of failure
+      options:
+        - Signature does not match
+        - Hash / chain mismatch
+        - Schema or field mismatch
+        - Determinism mismatch (same input, different result)
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional context
+      description: Anything about how the artifact was generated or modified
+    validations:
+      required: false

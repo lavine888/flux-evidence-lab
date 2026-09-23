@@ -219,6 +219,7 @@ tools/                       # audit review + portable handoff helpers
 - [Prior-work disclosure](docs/PRIOR_WORK_DISCLOSURE.md)
 - [Third-party notices](docs/THIRD_PARTY_NOTICES.md)
 - [Submission notes](docs/SUBMISSION.md)
+- [Contributing](CONTRIBUTING.md)
 
 ## Source checkout vs. portable handoff
 

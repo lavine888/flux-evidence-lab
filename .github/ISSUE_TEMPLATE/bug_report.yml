@@ -1,0 +1,54 @@
+name: Bug report
+description: Report a reproducible defect in the decision path, API, console, or tooling
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please include the exact commands and the artifact id so the run can be reproduced offline.
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Affected surface
+      options:
+        - Core decision path (evidence / model / risk / chain / signing)
+        - Verification
+        - Local HTTP API
+        - Judge console
+        - Public BTC read-only adapter
+        - Tooling (review-evidence / portable handoff)
+        - Docs
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        cd app
+        npm ci --ignore-scripts
+        npm test
+        ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+      description: Include the error output or the failing assertion.
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      description: OS and Node version (`node --version`)
+    validations:
+      required: false
